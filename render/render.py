@@ -694,14 +694,18 @@ def main():
         # 2) video: frames piped to x264, muxed with the mix
         enc = ["ffmpeg", "-y", "-v", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{size[0]}x{size[1]}",
                "-r", str(fps), "-i", "-", "-i", wav, "-map", "0:v", "-map", "1:a",
-               "-c:v", "libx264", "-preset", "veryfast" if a.preview else "slow", "-crf", "28" if a.preview else "18",
+               "-c:v", "libx264", "-preset", "veryfast" if a.preview else "medium", "-crf", "28" if a.preview else "20",
                "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", "-shortest", a.out]
         ff = subprocess.Popen(enc, stdin=subprocess.PIPE)
         with Pool(a.jobs, initializer=_init, initargs=(plan,)) as pool:
-            for k, buf in enumerate(pool.imap(_render, ((f / fps, size) for f in range(nframes)), chunksize=4)):
-                ff.stdin.write(buf)
-                if k % (fps * 5) == 0:
-                    print(f"\r[render] {k/fps:6.1f}s / {plan.total:.1f}s", end="", file=sys.stderr, flush=True)
+            # Bounded batches: Pool.imap buffers results without limit, and frames
+            # render faster than x264 encodes them, which exhausts memory at 1080p.
+            batch = a.jobs * 8
+            for b0 in range(0, nframes, batch):
+                jobs = [(f / fps, size) for f in range(b0, min(nframes, b0 + batch))]
+                for buf in pool.imap(_render, jobs, chunksize=2):
+                    ff.stdin.write(buf)
+                print(f"\r[render] {min(nframes, b0 + batch)/fps:6.1f}s / {plan.total:.1f}s", end="", file=sys.stderr, flush=True)
         ff.stdin.close()
         if ff.wait() != 0:
             sys.exit("ffmpeg encode failed")
