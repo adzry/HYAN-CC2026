@@ -31,7 +31,7 @@ def main():
                            "voice_settings": {"stability": 0.45, "similarity_boost": 0.8, "style": 0.35,
                                               "use_speaker_boost": True}}).encode()
         req = urllib.request.Request(
-            f"https://api.elevenlabs.io/v1/text-to-speech/{voice}?output_format=mp3_44100_192",
+            f"https://api.elevenlabs.io/v1/text-to-speech/{voice}?output_format=mp3_44100_128",
             data=body, headers={"xi-api-key": key, "Content-Type": "application/json", "Accept": "audio/mpeg"})
         with urllib.request.urlopen(req, timeout=180) as r, open(out, "wb") as f:
             f.write(r.read())
