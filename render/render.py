@@ -10,7 +10,7 @@ Usage (from the repo root; normally via ./render_video.sh):
   python3 render/render.py [--out out/video.mp4] [--fps 30] [--preview]
                            [--still SECONDS] [--music bed.mp3] [--no-captions]
 """
-import argparse, json, math, os, random, shutil, subprocess, sys, tempfile
+import argparse, json, math, os, random, re, shutil, subprocess, sys, tempfile
 from functools import lru_cache
 from multiprocessing import Pool
 
@@ -254,16 +254,62 @@ def backdrop():
 
 
 # ------------------------------------------------------------------ scenes
+class Timing:
+    """Maps a character index in the narration to seconds into the voiceover.
+
+    Without audio it is linear. With audio, the narrator's pauses (FFmpeg
+    silencedetect) are matched to the script's punctuation by dynamic
+    programming, and times are interpolated between those anchors.
+    """
+    def __init__(self, text, dur, silences=None):
+        n = len(text)
+        vc = np.cumsum([0] + [ch.isalnum() for ch in text])        # voiced chars before index
+        v0, v1 = 0.0, dur
+        sil = list(silences or [])
+        if sil and sil[0][0] < 0.05:
+            v0 = sil.pop(0)[1]
+        if sil and sil[-1][1] > dur - 0.05:
+            v1 = sil.pop()[0]
+        xs, ys = [0, n], [v0, v1]
+        punct = [m.end() for m in re.finditer(r'[.,:;!?—]["”]?', text) if m.end() < n - 1]
+        if sil and punct:
+            gaps = sum(e - st for st, e in sil)
+            rate = max(0.1, (v1 - v0 - gaps)) / max(1, vc[n])
+            V, acc = [], 0.0
+            for st, e in sil:
+                V.append(st - v0 - acc); acc += e - st
+            E = [rate * vc[q] for q in punct]
+            m, k, SKIP = len(punct), len(sil), 1.5
+            f = np.full((m + 1, k + 1), np.inf); f[0, :] = np.arange(k + 1) * SKIP; f[:, 0] = 0
+            for i in range(1, m + 1):
+                for j in range(1, k + 1):
+                    f[i, j] = min(f[i - 1, j], f[i, j - 1] + SKIP, f[i - 1, j - 1] + abs(E[i - 1] - V[j - 1]))
+            i, j = m, k
+            while i > 0 and j > 0:
+                if f[i, j] == f[i - 1, j - 1] + abs(E[i - 1] - V[j - 1]):
+                    xs += [punct[i - 1], punct[i - 1] + 1]; ys += [sil[j - 1][0], sil[j - 1][1]]
+                    i, j = i - 1, j - 1
+                elif f[i, j] == f[i - 1, j]:
+                    i -= 1
+                else:
+                    j -= 1
+        order = np.argsort(xs, kind="stable")
+        self.xs, self.ys = np.array(xs, float)[order], np.array(ys, float)[order]
+
+    def at(self, idx):
+        return float(np.interp(idx, self.xs, self.ys))
+
+
 class Ctx:
     """Per-scene timing: cue(phrase) -> seconds into the scene where the narrator says it."""
-    def __init__(self, scene, speech, dur):
-        self.text, self.speech, self.dur = scene["narration"], speech, dur
+    def __init__(self, scene, timing, dur):
+        self.text, self.timing, self.dur = scene["narration"], timing, dur
 
     def cue(self, phrase, offset=-0.25):
         i = self.text.find(phrase)
         if i < 0:
             raise KeyError(f"cue '{phrase}' not in narration")
-        return max(0.0, LEAD + self.speech * i / len(self.text) + offset)
+        return max(0.0, LEAD + self.timing.at(i) + offset)
 
 
 def chapter_card(cv, c, num, word, t):
@@ -429,7 +475,7 @@ def scene3(cv, c, t):
             paste(cv, text_img(f"0{k+1}", "mono", 70, YEL), (170, y + 40), a * p)
             paste(cv, text_img(w, "black", 160, INK), (330 - 60 * (1 - p), y), a * p)
         q = ease_out((t - c.cue("into visitors")) / 0.5)
-        paste(cv, text_img("…in visitors’ own hands.", "semi", 40, YEL), (340, 940), a * q)
+        paste(cv, text_img("…in visitors’ own hands.", "semi", 44, YEL), (720, 790), a * q)
     # Hand hygiene
     card(cv, "image4.jpg", 640, 540, 760, 800, s3, s4 + 0.3, t, zoom=0.12)
     a = env(t, s3, s4 + 0.3)
@@ -566,27 +612,25 @@ def caption_chunks(text, maxlen=62):
     return out
 
 class Plan:
-    def __init__(self, cfg, durations, speech, captions):
-        self.cfg, self.durs, self.speech, self.captions = cfg, durations, speech, captions
+    def __init__(self, cfg, durations, timings, captions):
+        self.cfg, self.durs, self.timings, self.captions = cfg, durations, timings, captions
         self.starts = np.cumsum([0] + durations[:-1]).tolist()
         self.total = sum(durations)
         self.caps = []
         for i, sc in enumerate(cfg["scenes"]):
-            chunks = caption_chunks(sc["narration"])
-            n = sum(len(c) for c in chunks)
-            acc = 0
-            for ch in chunks:
-                a = LEAD + speech[i] * acc / n
-                acc += len(ch) + 1
-                b = LEAD + speech[i] * acc / n
-                self.caps.append((self.starts[i] + a, self.starts[i] + b, ch))
+            text, pos = sc["narration"], 0
+            for ch in caption_chunks(text):
+                a_i = text.find(ch, pos); pos = a_i + len(ch)
+                a = LEAD + timings[i].at(a_i)
+                b = LEAD + timings[i].at(pos)
+                self.caps.append((self.starts[i] + a, self.starts[i] + b + 0.15, ch))
 
     def frame(self, t):
         cv = backdrop().copy()
         i = max(k for k in range(5) if self.starts[k] <= t + 1e-9)
         sc = self.cfg["scenes"][i]
         lt = t - self.starts[i]
-        SCENES[i](cv, Ctx(sc, self.speech[i], self.durs[i]), lt)
+        SCENES[i](cv, Ctx(sc, self.timings[i], self.durs[i]), lt)
         # scene-boundary dip to black for a punchy cut
         if i > 0 and lt < 0.12:
             rect(cv, (0, 0, W, H), BG, 1 - lt / 0.12)
@@ -612,6 +656,14 @@ class Plan:
 
 
 # ------------------------------------------------------------------- main
+def silences(path):
+    """Pauses in a voiceover as [(start, end)] seconds, via FFmpeg silencedetect."""
+    err = subprocess.run(["ffmpeg", "-hide_banner", "-i", path, "-af", "silencedetect=noise=-35dB:d=0.15",
+                          "-f", "null", "-"], capture_output=True, text=True).stderr
+    st = [float(x) for x in re.findall(r"silence_start: ([0-9.]+)", err)]
+    en = [float(x) for x in re.findall(r"silence_end: ([0-9.]+)", err)]
+    return list(zip(st, en))
+
 def probe(path):
     out = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", path],
                          capture_output=True, text=True)
@@ -648,7 +700,7 @@ def main():
         else:
             d = sc["target_seconds"] - LEAD - TAIL; audio.append(None)
             print(f"[warn] {sc['audio']} missing — using {sc['target_seconds']}s of silence", file=sys.stderr)
-        speech.append(d)
+        speech.append(Timing(sc["narration"], d, silences(p) if audio[-1] else None))
         durs.append(LEAD + d + TAIL)
     plan = Plan(cfg, durs, speech, not a.no_captions)
     print(f"[plan] scenes: {', '.join(f'{d:.1f}s' for d in durs)}  total {plan.total:.1f}s", file=sys.stderr)
