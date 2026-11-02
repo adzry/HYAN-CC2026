@@ -250,6 +250,50 @@
     "s5_psd_sub": "…celebrated where the public can see it.",
     "s5_role": "Hospital Director, Hospital Yan",
     "s5_quote": "Healthcare that walks out to meet its community.",
-    "s5_tag": "Together, for a safer Yan."
-  }
+    "s5_tag": "Together, for a safer Yan.",
+    "intro_flash": [
+      [
+        "12 BOOTHS",
+        "image15.jpg"
+      ],
+      [
+        "GAMES",
+        "image12.jpg"
+      ],
+      [
+        "PATIENT SAFETY",
+        "image25.jpg"
+      ],
+      [
+        "COLLABORATION",
+        "image17.jpg"
+      ],
+      [
+        "COMMUNITY",
+        "image13.png"
+      ],
+      [
+        "SEE YOU IN YAN!",
+        "image3.jpg"
+      ]
+    ],
+    "intro_sub": "EXHIBITION  ·  18 NOVEMBER 2026  ·  YAN, KEDAH"
+  },
+  "intro": true,
+  "caption_keep": [
+    "Hospital Yan Community Carnival",
+    "World AMR Awareness Week",
+    "One Health, One Action",
+    "Patient Safety Day",
+    "Patient Safety Committee's",
+    "Doctor Tengku Nurshahril",
+    "Hospital Director",
+    "Negeri Sembilan's Clinical Research Centre",
+    "antimicrobial resistance",
+    "Mystery Box",
+    "Emergency and Trauma Unit",
+    "Civil Defence Force",
+    "Tabung Haji",
+    "PEKA B40"
+  ]
 }

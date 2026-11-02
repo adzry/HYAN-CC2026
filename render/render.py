@@ -33,15 +33,27 @@ W, H = 1920, 1080
 SR = 48000
 WIPE = 0.42         # half-length of the chapter wipe transition (s)
 
-BG = (14, 15, 18)
-INK = (240, 237, 228)
-DIM = (150, 150, 158)
+BG = (12, 18, 38)            # deep navy: dark text, pills and panels
+INK = (255, 253, 247)
+DIM = (214, 228, 240)
 YEL = (255, 210, 63)
-RED = (232, 72, 60)
+RED = (240, 68, 90)
 TEAL = (64, 196, 180)
-NAVY = (24, 28, 44)
-CAT_COL = {"Hospital Yan": YEL, "JKN": RED, "Agensi Luar": TEAL, "Komuniti": (150, 160, 255)}
-
+NAVY = (14, 22, 52)
+MAGENTA = (233, 30, 140)
+CORAL = (255, 112, 67)
+BLUE = (33, 118, 255)
+PURPLE = (124, 77, 255)
+CAT_COL = {"Hospital Yan": YEL, "JKN": RED, "Agensi Luar": (255, 255, 255), "Komuniti": (190, 200, 255)}
+# per-scene background gradients (top-left -> bottom-right) and the colour of the drifting light blobs
+PALETTES = [
+    ((0, 158, 170), (22, 86, 196), [(255, 210, 63), (0, 230, 200), (120, 90, 255)]),     # 1 hook: teal -> blue
+    ((112, 48, 222), (214, 38, 140), [(255, 210, 63), (255, 112, 67), (90, 200, 255)]),  # 2 play: purple -> magenta
+    ((18, 96, 214), (0, 150, 150), [(0, 230, 200), (255, 210, 63), (150, 120, 255)]),    # 3 protect: blue -> teal
+    ((0, 150, 122), (24, 104, 200), [(255, 210, 63), (120, 255, 200), (255, 112, 67)]),  # 4 connect: green-teal -> blue
+    ((52, 56, 190), (150, 44, 196), [(255, 170, 60), (255, 210, 63), (233, 30, 140)]),   # 5 vision: indigo -> purple
+]
+FLASH = [MAGENTA, YEL, BLUE, CORAL, (0, 184, 169), PURPLE]
 
 # --------------------------------------------------------------------- helpers
 def font(name, size):
@@ -74,8 +86,11 @@ def env(t, a, b, fi=0.35, fo=0.3):
         return 0.0
     return min(clamp((t - a) / fi) if fi else 1.0, clamp((b - t) / fo) if fo else 1.0)
 
-@lru_cache(maxsize=4096)
 def text_img(text, fname, size, color=INK, tracking=0):
+    return _text_img(text, fname, int(size), tuple(color), tracking)
+
+@lru_cache(maxsize=4096)
+def _text_img(text, fname, size, color, tracking):
     f = font(fname, size)
     if tracking:
         widths = [f.getlength(c) + tracking for c in text]
@@ -91,6 +106,16 @@ def text_img(text, fname, size, color=INK, tracking=0):
             d.text((x, 0), c, font=f, fill=color); x += cw
     else:
         d.text((0, 0), text, font=f, fill=color)
+    if sum(color) > 450:
+        # light text gets a soft drop shadow so it reads on bright backgrounds
+        off = max(2, size // 28)
+        sh = Image.new("RGBA", (im.width + off * 2 + 4, im.height + off * 2 + 4), (0, 0, 0, 0))
+        a = im.getchannel("A").point(lambda v: int(v * 0.55))
+        blk = Image.new("RGBA", im.size, BG + (0,)); blk.putalpha(a)
+        sh.alpha_composite(blk, (off, off + 1))
+        sh = sh.filter(ImageFilter.GaussianBlur(max(2, size // 22)))
+        sh.alpha_composite(im, (0, 0))
+        im = sh
     return im
 
 def fit_size(text, fname, size, max_w):
@@ -309,7 +334,7 @@ def grain_layers():
     out = []
     for _ in range(6):
         n = rng.integers(0, 255, (H // 2, W // 2), dtype=np.uint8)
-        a = np.full_like(n, 12)
+        a = np.full_like(n, 7)
         out.append(Image.fromarray(np.dstack([n, n, n, a]), "RGBA").resize((W, H), Image.NEAREST))
     return out
 
@@ -317,19 +342,46 @@ def grain_layers():
 def vignette():
     y, x = np.mgrid[0:H, 0:W]
     d = np.sqrt(((x - W / 2) / (W / 2)) ** 2 + ((y - H / 2) / (H / 2)) ** 2)
-    a = (np.clip((d - 0.65) / 0.75, 0, 1) ** 1.6 * 200).astype(np.uint8)
-    z = np.zeros_like(a)
-    return Image.fromarray(np.dstack([z, z, z, a]), "RGBA")
+    a = (np.clip((d - 0.7) / 0.8, 0, 1) ** 1.6 * 120).astype(np.uint8)
+    r, g, b = [np.full_like(a, v) for v in NAVY]
+    return Image.fromarray(np.dstack([r, g, b, a]), "RGBA")
 
-@lru_cache(maxsize=1)
-def backdrop():
-    im = Image.new("RGBA", (W, H), BG + (255,))
+@lru_cache(maxsize=8)
+def gradient(i):
+    """Diagonal two-colour gradient, larger than the frame so it can drift."""
+    c1, c2, _ = PALETTES[i]
+    gw, gh = W + 240, H + 160
+    y, x = np.mgrid[0:gh, 0:gw].astype(np.float32)
+    u = np.clip((x / gw) * 0.62 + (y / gh) * 0.38, 0, 1)[..., None]
+    rgb = (np.array(c1, np.float32) * (1 - u) + np.array(c2, np.float32) * u).astype(np.uint8)
+    im = Image.fromarray(np.dstack([rgb, np.full((gh, gw), 255, np.uint8)]), "RGBA")
     d = ImageDraw.Draw(im)
-    for x in range(0, W, 120):
-        d.line([(x, 0), (x, H)], fill=(255, 255, 255, 7))
-    for y in range(0, H, 120):
-        d.line([(0, y), (W, y)], fill=(255, 255, 255, 7))
+    for gx in range(0, gw, 120):
+        d.line([(gx, 0), (gx, gh)], fill=(255, 255, 255, 16))
+    for gy in range(0, gh, 120):
+        d.line([(0, gy), (gw, gy)], fill=(255, 255, 255, 16))
     return im
+
+@lru_cache(maxsize=32)
+def blob(color, r, alpha):
+    y, x = np.mgrid[0:2 * r, 0:2 * r].astype(np.float32)
+    d = np.sqrt((x - r) ** 2 + (y - r) ** 2) / r
+    a = (np.clip(1 - d, 0, 1) ** 2.2 * alpha).astype(np.uint8)
+    cr, cg, cb = [np.full_like(a, v) for v in color]
+    return Image.fromarray(np.dstack([cr, cg, cb, a]), "RGBA")
+
+def backdrop(i, t):
+    """Bright animated background: drifting gradient, soft light blobs, faint grid."""
+    g = gradient(i)
+    ox = 120 + 110 * math.sin(t * 0.21 + i)
+    oy = 80 + 70 * math.cos(t * 0.17 + i * 2)
+    cv = g.crop((int(ox), int(oy), int(ox) + W, int(oy) + H))
+    for k, col in enumerate(PALETTES[i][2]):
+        bl = blob(col, 520, 70)
+        bx = W * (0.15 + 0.7 * (0.5 + 0.5 * math.sin(t * (0.11 + 0.04 * k) + k * 2.1 + i)))
+        by = H * (0.2 + 0.6 * (0.5 + 0.5 * math.cos(t * (0.09 + 0.03 * k) + k * 1.3)))
+        paste(cv, bl, (bx - 520, by - 520))
+    return cv
 
 
 # ------------------------------------------------------------------ timing
@@ -716,18 +768,52 @@ SCENES = [scene1, scene2, scene3, scene4, scene5]
 # ------------------------------------------------------------------- frame
 NBSP = " "
 
-def caption_chunks(text, maxlen=62):
-    words, out, cur = text.split(" "), [], ""
-    for w in words:
-        if not w:
+WEAK_END = {"bukan", "dan", "untuk", "yang", "di", "ke", "dari", "pada", "dengan", "sambil", "the", "and", "of",
+            "to", "a", "an", "in", "for", "with", "into", "its"}
+
+def caption_chunks(text, maxlen=72):
+    """Split narration into subtitle lines: one sentence per line when it fits, otherwise a
+    balanced split that prefers natural pauses (, — :) and never leaves an orphan word.
+    Protected phrases arrive with NBSP instead of spaces, so they are never broken."""
+    out = []
+    for sent in re.findall(r".+?[.!?](?=\s|$)|.+$", text.strip()):
+        sent = sent.strip()
+        if not sent:
             continue
-        if len(cur) + len(w) + 1 > maxlen or (cur and cur[-1] in ".:!?—"):
-            out.append(cur); cur = w
-        else:
-            cur = (cur + " " + w).strip(" ")
-    if cur:
-        out.append(cur)
+        if len(sent) <= maxlen:
+            out.append(sent); continue
+        words = sent.split(" ")
+        n = len(words)
+        L = [len(w) for w in words]
+        best = [math.inf] * (n + 1); prev = [0] * (n + 1); best[0] = 0.0
+        nlines = math.ceil(len(sent) / maxlen)
+        ideal = len(sent) / nlines
+        for j in range(1, n + 1):
+            for i in range(j - 1, -1, -1):
+                ln = sum(L[i:j]) + (j - i - 1)
+                if ln > maxlen and j - i > 1:
+                    break
+                c = ((ln - ideal) / 10.0) ** 2
+                if ln < 18:
+                    c += 40                                   # orphan / stub line
+                if j < n:
+                    last = words[j - 1]
+                    c += 0 if last[-1] in ",—:;" else (6 if words[j][0] == "—" else 14)
+                    if last.lower() in WEAK_END:
+                        c += 20
+                if best[i] + c < best[j]:
+                    best[j], prev[j] = best[i] + c, i
+        cuts, j = [], n
+        while j > 0:
+            cuts.append((prev[j], j)); j = prev[j]
+        for i, j in reversed(cuts):
+            out.append(" ".join(words[i:j]))
     return out
+
+def caption_display(s):
+    s = re.sub(r"\s*—$", "", s.strip())
+    s = re.sub(r"^—\s*", "", s)
+    return s
 
 @lru_cache(maxsize=1)
 def wipe_band():
@@ -740,18 +826,124 @@ def wipe_band():
     d.polygon([(bw - 80, 0), (bw, 0), (bw - skew, H), (bw - 80 - skew, H)], fill=NAVY + (255,))
     return im
 
+
+# ------------------------------------------------------------------- intro
+@lru_cache(maxsize=16)
+def flash_card(name, angle):
+    src = src_img(name)
+    s = min(1000 / src.width, 560 / src.height)
+    ph = src.resize((int(src.width * s), int(src.height * s)), Image.LANCZOS)
+    b = 14
+    im = Image.new("RGBA", (ph.width + 2 * b, ph.height + 2 * b), (255, 253, 247, 255))
+    im.paste(ph, (b, b))
+    return im.rotate(angle, Image.BICUBIC, expand=True)
+
+@lru_cache(maxsize=1)
+def confetti():
+    rng = np.random.default_rng(11)
+    n = 170
+    ang = rng.uniform(-math.pi, 0, n) + rng.normal(0, 0.25, n)
+    sp = rng.uniform(700, 1900, n)
+    cols = [YEL, MAGENTA, (0, 230, 200), CORAL, (255, 255, 255), BLUE]
+    return [(sp[k] * math.cos(ang[k]), sp[k] * math.sin(ang[k]) * 1.1, rng.uniform(9, 20),
+             cols[k % len(cols)], rng.uniform(6, 16), rng.uniform(0, 6.28), rng.random() < 0.3) for k in range(n)]
+
+def draw_confetti(cv, tau, cx, cy):
+    if tau < 0 or tau > 3.2:
+        return
+    layer = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    d = ImageDraw.Draw(layer)
+    fade = clamp((3.2 - tau) / 0.8)
+    for vx, vy, s, col, spin, ph, circ in confetti():
+        dr = (1 - math.exp(-2.2 * tau)) / 2.2           # velocity with air drag
+        x = cx + vx * dr
+        y = cy + vy * dr + 520 * tau * tau * 0.5
+        if not (-30 < x < W + 30 and -30 < y < H + 30):
+            continue
+        w = s * (0.25 + 0.75 * abs(math.sin(spin * tau + ph)))
+        col = col + (int(255 * fade),)
+        if circ:
+            d.ellipse((x - s / 2, y - s / 2, x + s / 2, y + s / 2), fill=col)
+        else:
+            d.rectangle((x - w / 2, y - s / 3, x + w / 2, y + s / 3), fill=col)
+    cv.alpha_composite(layer)
+
+def intro_frame(plan, t):
+    b = plan.beat
+    ui = plan.ui
+    if t < b:                                             # iris burst
+        cv = Image.new("RGBA", (W, H), NAVY + (255,))
+        r = 1200 * ease_expo(t / b)
+        layer = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+        ImageDraw.Draw(layer).ellipse((W / 2 - r, H / 2 - r, W / 2 + r, H / 2 + r), fill=FLASH[0] + (255,))
+        cv.alpha_composite(layer)
+        ti = text_img("18.11.2026", "mono", 120, INK)
+        paste(cv, ti, (W / 2 - ti.width / 2, H / 2 - ti.height / 2), clamp(t / (0.5 * b)) * (1 - clamp((t - 0.7 * b) / (0.3 * b))))
+    elif t < 7 * b:                                       # six beat-synced flashes
+        k = min(5, int(t / b) - 1)
+        u = t - b * (k + 1)
+        col = FLASH[k]
+        cv = Image.new("RGBA", (W, H), col + (255,))
+        # diagonal stripes for energy
+        layer = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+        d = ImageDraw.Draw(layer)
+        sh = (u / b) * 160
+        for x0 in range(-H, W + H, 160):
+            d.polygon([(x0 + sh, 0), (x0 + 60 + sh, 0), (x0 + 60 + sh - H, H), (x0 + sh - H, H)], fill=(255, 255, 255, 22))
+        cv.alpha_composite(layer)
+        word, img = ui["intro_flash"][k]
+        card_im = flash_card(img, (-4, 3, -2, 4, -3, 2)[k])
+        z = 1.12 - 0.12 * ease_out(u / (0.8 * b))
+        cw, ch = int(card_im.width * z), int(card_im.height * z)
+        ci = card_im.resize((cw, ch), Image.BILINEAR)
+        sh_im, pad = shadow(cw, ch)
+        paste(cv, sh_im, (W / 2 - cw / 2 - pad, H / 2 - 70 - ch / 2 - pad), 0.8)
+        paste(cv, ci, (W / 2 - cw / 2, H / 2 - 70 - ch / 2))
+        dark = sum(col) > 520
+        fs = int(round(150 * (1.3 - 0.3 * ease_back(u / (0.35 * b))) / 4) * 4)
+        wi = text_img(word, "black", fit_size(word, "black", fs, 1700), BG if dark else INK)
+        paste(cv, wi, (W / 2 - wi.width / 2, H - 70 - wi.height))
+        if u < 0.12:
+            rect(cv, (0, 0, W, H), (255, 255, 255), 0.55 * (1 - u / 0.12))
+    else:                                                 # title lockup with confetti
+        tau = t - 7 * b
+        cv = backdrop(0, t)
+        draw_confetti(cv, tau, W / 2, H / 2 - 40)
+        p = ease_back(tau / 0.4)
+        fs = int(round(205 * (1.45 - 0.45 * clamp(p)) / 4) * 4)
+        hy = text_img("HOSPITAL YAN", "black", fs, INK)
+        paste(cv, hy, (W / 2 - hy.width / 2, 300 - hy.height / 2 + 30), clamp(tau / 0.15))
+        cc = text_img("COMMUNITY CARNIVAL", "black", 104, INK, tracking=2)
+        reveal(cv, cc, W / 2 - cc.width / 2, 430, ease_expo((tau - 0.5 * b) / 0.5))
+        pb = ease_back((tau - b) / 0.45)
+        if pb > 0:
+            yr = text_img("2026", "black", 120, BG)
+            bw_, bh_ = (yr.width + 70) * clamp(pb), yr.height + 30
+            rect(cv, (W / 2 - bw_ / 2, 590, W / 2 + bw_ / 2, 590 + bh_), YEL)
+            paste(cv, yr, (W / 2 - yr.width / 2, 600), clamp(pb))
+        sub = text_img(ui["intro_sub"], "semi", 40, INK, tracking=4)
+        paste(cv, sub, (W / 2 - sub.width / 2, 800), ease_out((tau - 1.6 * b) / 0.5))
+        rect(cv, (W / 2 - 300 * ease_expo((tau - 1.4 * b) / 0.6), 780, W / 2 + 300 * ease_expo((tau - 1.4 * b) / 0.6), 784), YEL)
+        if tau < 0.1:
+            rect(cv, (0, 0, W, H), (255, 255, 255), 0.7 * (1 - tau / 0.1))
+    cv.alpha_composite(grain_layers()[int(t * 12) % 6])
+    return cv
+
+
 class Plan:
-    def __init__(self, cfg, durations, leads, timings, captions):
+    def __init__(self, cfg, durations, leads, timings, captions, intro=0.0, beat=0.5):
         self.cfg, self.durs, self.leads, self.timings, self.captions = cfg, durations, leads, timings, captions
         self.ui = cfg["ui"]
-        self.starts = np.cumsum([0] + durations[:-1]).tolist()
-        self.total = sum(durations)
+        self.intro, self.beat = intro, beat
+        self.starts = (intro + np.cumsum([0] + durations[:-1])).tolist()
+        self.total = intro + sum(durations)
         subs = cfg.get("caption_subs", [])
+        keep = [s for s, _ in subs] + cfg.get("caption_keep", [])
         self.caps = []
         for i, sc in enumerate(cfg["scenes"]):
             text = sc["narration"]
             prot = text
-            for src, _ in subs:
+            for src in sorted(keep, key=len, reverse=True):
                 prot = prot.replace(src, src.replace(" ", NBSP))
             pos = 0
             for ch in caption_chunks(prot):
@@ -761,54 +953,56 @@ class Plan:
                     disp = disp.replace(src, dst)
                 a = leads[i] + timings[i].at(a_i)
                 b = leads[i] + timings[i].at(pos)
-                self.caps.append((self.starts[i] + a - 0.05, self.starts[i] + b + 0.2, disp))
-        # no overlaps: each caption ends when the next starts
+                self.caps.append((self.starts[i] + a - 0.05, self.starts[i] + b + 0.25, caption_display(disp)))
         for k in range(len(self.caps) - 1):
             a, b, s = self.caps[k]
             self.caps[k] = (a, min(b, self.caps[k + 1][0]), s)
 
     def scene_at(self, t):
-        return max(k for k in range(len(self.starts)) if self.starts[k] <= t + 1e-9)
+        ks = [k for k in range(len(self.starts)) if self.starts[k] <= t + 1e-9]
+        return max(ks) if ks else -1
 
     def frame(self, t):
-        cv = backdrop().copy()
         i = self.scene_at(t)
-        sc = self.cfg["scenes"][i]
-        lt = t - self.starts[i]
-        SCENES[i](cv, Ctx(sc, self.timings[i], self.durs[i], self.leads[i], self.ui), lt)
-        # motion cut: a quick settle-in zoom after each wipe
-        if i > 0 and lt < 0.6:
-            z = 1 + 0.05 * (1 - ease_out(lt / 0.6))
-            zw, zh = int(W / z), int(H / z)
-            cv = cv.resize((W, H), Image.BILINEAR, box=((W - zw) / 2, (H - zh) / 2, (W + zw) / 2, (H + zh) / 2))
-        # chrome
-        chip = text_img(f"{i+1:02d}  {sc['title'].upper()}", "mono", 22, DIM)
-        paste(cv, chip, (60, 44), 0.9)
-        rect(cv, (60, 76, 60 + 40 * ease_expo(lt / 0.8), 79), YEL, 0.9)
-        rect(cv, (0, H - 10, W, H), (40, 41, 46))
-        rect(cv, (0, H - 10, W * t / self.total, H), YEL)
-        for s in self.starts[1:]:
-            rect(cv, (W * s / self.total - 2, H - 16, W * s / self.total + 2, H), INK, 0.8)
-        if self.captions:
-            for a, b, txt in self.caps:
-                if a <= t < b:
-                    ti = text_img(txt, "semi", 34, INK)
-                    p = ease_out((t - a) / 0.18)
-                    x, y = W / 2 - ti.width / 2, H - 92 + 8 * (1 - p)
-                    rect(cv, (x - 18, y - 8, x + ti.width + 18, y + ti.height + 4), (0, 0, 0), 0.62 * p)
-                    paste(cv, ti, (x, y), p)
-                    break
-        cv.alpha_composite(vignette())
-        cv.alpha_composite(grain_layers()[int(t * 12) % 6])
-        # chapter wipe: skewed band sweeps across, covering the cut
-        for s in self.starts[1:]:
+        if i < 0:
+            cv = intro_frame(self, t)
+        else:
+            cv = backdrop(i, t)
+            sc = self.cfg["scenes"][i]
+            lt = t - self.starts[i]
+            SCENES[i](cv, Ctx(sc, self.timings[i], self.durs[i], self.leads[i], self.ui), lt)
+            if (i > 0 or self.intro) and lt < 0.6:          # motion cut: settle-in zoom after each wipe
+                z = 1 + 0.05 * (1 - ease_out(lt / 0.6))
+                zw, zh = int(W / z), int(H / z)
+                cv = cv.resize((W, H), Image.BILINEAR, box=((W - zw) / 2, (H - zh) / 2, (W + zw) / 2, (H + zh) / 2))
+            chip = text_img(f"{i+1:02d}  {sc['title'].upper()}", "mono", 22, INK)
+            rect(cv, (48, 36, 72 + chip.width, 86), BG, 0.35)
+            paste(cv, chip, (60, 44), 0.95)
+            rect(cv, (60, 76, 60 + 40 * ease_expo(lt / 0.8), 79), YEL, 0.95)
+            frac = clamp((t - self.intro) / (self.total - self.intro))
+            rect(cv, (0, H - 10, W, H), BG, 0.45)
+            rect(cv, (0, H - 10, W * frac, H), YEL)
+            for s in self.starts[1:]:
+                xs = W * (s - self.intro) / (self.total - self.intro)
+                rect(cv, (xs - 2, H - 16, xs + 2, H), INK, 0.8)
+            if self.captions:
+                for a, b, txt in self.caps:
+                    if a <= t < b:
+                        ti = text_img(txt, "semi", 36, INK)
+                        p = ease_out((t - a) / 0.18)
+                        x, y = W / 2 - ti.width / 2, H - 96 + 8 * (1 - p)
+                        rect(cv, (x - 20, y - 8, x + ti.width + 14, y + ti.height - 2), BG, 0.72 * p)
+                        paste(cv, ti, (x, y), p)
+                        break
+            cv.alpha_composite(vignette())
+            cv.alpha_composite(grain_layers()[int(t * 12) % 6])
+        # chapter wipe: skewed band sweeps across, covering each cut
+        for s in (self.starts if self.intro else self.starts[1:]):
             u = (t - (s - WIPE)) / (2 * WIPE)
             if 0 <= u <= 1:
                 band = wipe_band()
-                x = -band.width + (W + band.width) * ease_io(u)
-                paste(cv, band, (x, 0))
-        # open from black, close to black
-        if t < 0.5:
+                paste(cv, band, (-band.width + (W + band.width) * ease_io(u), 0))
+        if not self.intro and t < 0.5:
             rect(cv, (0, 0, W, H), (0, 0, 0), 1 - t / 0.5)
         if t > self.total - 1.2:
             rect(cv, (0, 0, W, H), (0, 0, 0), clamp((t - (self.total - 1.2)) / 1.2))
@@ -879,8 +1073,41 @@ def add(buf, clip, t):
     j = min(len(buf), i + len(clip))
     buf[max(i, 0):j] += clip[max(0, -i):j - i]
 
-def build_mix(plan, cfg, audio, tempo, music_path, wav_out):
+def analyze_music(path, need):
+    """Load the music bed fitted to `need` seconds; estimate its beat and the start of its most
+    energetic stretch (used for the intro). Returns (stereo array, stretch factor, beat s, hot start s)."""
+    mu = decode(path, "loudnorm=I=-16:TP=-2:LRA=11")
+    have = len(mu) / SR
+    f = have / need
+    if 0.9 < f < 1.1 and abs(f - 1) > 0.003:
+        mu = decode(path, f"loudnorm=I=-16:TP=-2:LRA=11,atempo={f:.5f}")
+    else:
+        f = 1.0
+    mono = mu.mean(1)
+    hop = 512
+    n = len(mono) // hop
+    rms = np.sqrt((mono[:n * hop] ** 2).reshape(n, hop).mean(1) + 1e-10)
+    env_sr = SR / hop
+    onset = np.maximum(0, np.diff(np.log(rms), prepend=np.log(rms[0])))
+    onset -= onset.mean()
+    lo, hi = int(env_sr * 60 / 150), int(env_sr * 60 / 90)
+    ac = np.array([np.dot(onset[:-L], onset[L:]) for L in range(lo, hi + 1)])
+    L = lo + int(np.argmax(ac))
+    beat = L / env_sr
+    win = int(8 * env_sr)
+    csum = np.cumsum(np.concatenate([[0], rms]))
+    loud = (csum[win:] - csum[:-win]) / win
+    a0, a1 = int(0.25 * len(loud)), int(0.85 * len(loud))
+    start = a0 + int(np.argmax(loud[a0:a1]))
+    phases = [onset[start + ph: start + ph + 16 * L: L].sum() for ph in range(L)]
+    hot = (start + int(np.argmax(phases))) / env_sr
+    print(f"[audio] music {have:.1f}s fitted x{f:.3f}; beat {beat:.3f}s ({60/beat:.1f} BPM); intro from {hot:.1f}s",
+          file=sys.stderr)
+    return mu, f, beat, hot
+
+def build_mix(plan, cfg, audio, tempo, music, wav_out):
     total_n = int(math.ceil(plan.total * SR))
+    I = plan.intro
     voice = np.zeros((total_n, 2), np.float32)
     for i, p in enumerate(audio):
         if p:
@@ -891,53 +1118,67 @@ def build_mix(plan, cfg, audio, tempo, music_path, wav_out):
     nh = total_n // hop
     rms = np.sqrt((voice[:nh * hop].mean(1) ** 2).reshape(nh, hop).mean(1) + 1e-12)
     act = rms > 10 ** (-42 / 20)
-    k = np.ones(22 + 8, bool)
-    act = np.convolve(act, k, "same")[: nh] > 0
+    act = np.convolve(act, np.ones(30, bool), "same")[:nh] > 0
     act = np.roll(act, -4)
     G_SPEECH, G_PAUSE, G_SWELL = cfg.get("music_gains", [0.11, 0.33, 0.62])
     tgt = np.where(act, G_SPEECH, G_PAUSE).astype(np.float64)
     tt = np.arange(nh) / 100.0
-    # swells: intro until the first word, every chapter transition until its narrator starts, outro
-    windows = [(0, plan.leads[0] + 0.1)]
+    windows = [(max(0, I - 0.4), plan.starts[0] + plan.leads[0] + 0.1)]
     windows += [(s - 1.2, s + plan.leads[k] - 0.1) for k, s in enumerate(plan.starts) if k > 0]
-    last_voice = plan.starts[-1] + plan.leads[-1] + plan.speech[-1]
-    windows.append((last_voice + 0.2, plan.total))
+    windows.append((plan.starts[-1] + plan.leads[-1] + plan.speech[-1] + 0.2, plan.total))
     for a, b in windows:
-        m = (tt >= a) & (tt <= b) & ~act
-        tgt[m] = G_SWELL
-    # asymmetric smoothing: duck fast (90 ms), recover slower (450 ms)
+        tgt[(tt >= a) & (tt <= b) & ~act] = G_SWELL
     g = np.empty_like(tgt)
     acc = tgt[0]
     da, ua = 1 - math.exp(-1 / (100 * 0.09)), 1 - math.exp(-1 / (100 * 0.45))
-    for n in range(nh):
-        acc += (da if tgt[n] < acc else ua) * (tgt[n] - acc)
-        g[n] = acc
+    for k in range(nh):
+        acc += (da if tgt[k] < acc else ua) * (tgt[k] - acc)
+        g[k] = acc
     gain = np.interp(np.arange(total_n) / SR, tt, g).astype(np.float32)
 
-    mix = voice * 1.0
-    if music_path:
-        mu = decode(music_path, "loudnorm=I=-16:TP=-2:LRA=11")
-        need = plan.total
-        have = len(mu) / SR
-        f = have / need
-        if 0.9 < f < 1.1 and abs(f - 1) > 0.003:
-            mu = decode(music_path, f"loudnorm=I=-16:TP=-2:LRA=11,atempo={f:.5f}")
-        if len(mu) < total_n:
-            mu = np.concatenate([mu, np.zeros((total_n - len(mu), 2), np.float32)])
-        mu = mu[:total_n]
+    mix = voice.copy()
+    if music is not None:
+        mu, beat, hot = music
+        # main bed from the top of the track, starting under the intro's exit wipe
+        b0 = int(max(0, I - 0.4) * SR)
+        bed = np.zeros((total_n, 2), np.float32)
+        seg = mu[: total_n - b0]
+        bed[b0:b0 + len(seg)] = seg
+        if I:
+            fi = int(0.6 * SR)
+            bed[b0:b0 + fi] *= np.linspace(0, 1, fi)[:, None]
         fo = int(2.5 * SR)
-        mu[-fo:] *= np.linspace(1, 0, fo)[:, None]
-        mix += mu * gain[:, None]
-        print(f"[audio] music {have:.1f}s fitted to {need:.1f}s (x{f:.3f})", file=sys.stderr)
-    # sfx
+        bed[-fo:] *= np.linspace(1, 0, fo)[:, None]
+        mix += bed * gain[:, None]
+        if I:
+            # intro: the track's most energetic stretch, on the beat grid used by the flashes
+            n_i = int((I + 0.3) * SR)
+            s0 = int(hot * SR)
+            hi = mu[s0:s0 + n_i].copy()
+            ramp = int(0.02 * SR)
+            hi[:ramp] *= np.linspace(0, 1, ramp)[:, None]
+            fo = int(0.7 * SR)
+            hi[-fo:] *= np.linspace(1, 0, fo)[:, None]
+            add(mix, hi * cfg.get("intro_gain", 0.9), 0.0)
+    # sound design
     wh, im, tk = sfx_whoosh(), sfx_impact(), sfx_tick()
     for k, s in enumerate(plan.starts):
-        if k > 0:
+        if k > 0 or I:
             add(mix, wh, s - WIPE - 0.25)
             add(mix, im * 0.8, s + 0.1)
-    add(mix, im * 0.7, 0.2)
+    if I:
+        b = plan.beat
+        add(mix, im * 0.9, 0.0)
+        for k in range(6):
+            add(mix, im * 0.32, b * (k + 1))
+            add(mix, tk * 2.5, b * (k + 1))
+        riser = np.flip(sfx_whoosh(1.6, seed=5), 0) * 1.1
+        add(mix, riser, 7 * b - len(riser) / SR)
+        add(mix, im * 1.0, 7 * b)
+    else:
+        add(mix, im * 0.7, 0.2)
     for j in range(10):
-        add(mix, tk, 0.25 + 1.1 * (j + 0.5) / 10)
+        add(mix, tk, plan.starts[0] + 0.25 + 1.1 * (j + 0.5) / 10)
     add(mix, im * 0.9, plan.starts[-1] + plan.ui_end_time)
     raw = os.path.splitext(wav_out)[0] + ".raw"
     mix.astype(np.float32).tofile(raw)
@@ -970,7 +1211,7 @@ def _render(args):
         im = im.resize(size, Image.BILINEAR)
     return im.tobytes()
 
-def load_plan(cfg, captions=True):
+def load_plan(cfg, captions=True, music_path=None):
     tempo = cfg.get("tempo", 1.0)
     leads, tails = cfg.get("leads", [0.35] * 5), cfg.get("tails", [0.7] * 5)
     durs, timings, audio, speech = [], [], [], []
@@ -987,11 +1228,16 @@ def load_plan(cfg, captions=True):
             print(f"[warn] {sc['audio']} missing — using {d:.1f}s of silence", file=sys.stderr)
         speech.append(d)
         durs.append(leads[i] + d + tails[i])
-    plan = Plan(cfg, durs, leads, timings, captions)
+    music, beat = None, 0.5
+    if music_path:
+        mu, f, beat, hot = analyze_music(music_path, sum(durs))
+        music = (mu, beat, hot)
+    intro = 12 * beat if cfg.get("intro") else 0.0
+    plan = Plan(cfg, durs, leads, timings, captions, intro, beat)
     plan.speech = speech
     c5 = Ctx(cfg["scenes"][-1], timings[-1], durs[-1], leads[-1], cfg["ui"])
     plan.ui_end_time = c5.cue("end") + 0.05
-    return plan, audio, tempo
+    return plan, audio, tempo, music
 
 def main():
     ap = argparse.ArgumentParser()
@@ -1009,8 +1255,12 @@ def main():
 
     cfg = json.load(open(os.path.join(HERE, "scenes.json" if a.lang == "en" else f"scenes_{a.lang}.json")))
     out = a.out or os.path.join(ROOT, cfg.get("out", "out/hyan_carnival_2026.mp4"))
-    plan, audio, tempo = load_plan(cfg, not a.no_captions)
-    print(f"[plan] {a.lang}: scenes {', '.join(f'{d:.1f}s' for d in plan.durs)}  total {plan.total:.1f}s", file=sys.stderr)
+    music = None if a.no_music else (a.music or (os.path.join(ROOT, cfg["music"]) if cfg.get("music") else None))
+    if music and not os.path.exists(music):
+        print(f"[warn] music {music} missing — rendering without music", file=sys.stderr)
+        music = None
+    plan, audio, tempo, music = load_plan(cfg, not a.no_captions, music)
+    print(f"[plan] {a.lang}: intro {plan.intro:.1f}s + scenes {', '.join(f'{d:.1f}s' for d in plan.durs)}  total {plan.total:.1f}s", file=sys.stderr)
 
     if a.still:
         os.makedirs(os.path.join(ROOT, "out", "stills"), exist_ok=True)
@@ -1019,10 +1269,6 @@ def main():
             plan.frame(t).save(fn); print(fn)
         return
 
-    music = None if a.no_music else (a.music or (os.path.join(ROOT, cfg["music"]) if cfg.get("music") else None))
-    if music and not os.path.exists(music):
-        print(f"[warn] music {music} missing — rendering without music", file=sys.stderr)
-        music = None
     fps = 15 if a.preview else a.fps
     size = (960, 540) if a.preview else (W, H)
     nframes = int(math.ceil(plan.total * fps))

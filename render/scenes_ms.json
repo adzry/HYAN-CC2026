@@ -284,6 +284,71 @@
     "s5_psd_sub": "…diraikan di hadapan masyarakat.",
     "s5_role": "Pengarah Hospital, Hospital Yan",
     "s5_quote": "Penjagaan kesihatan yang keluar menemui komunitinya.",
-    "s5_tag": "Bersama, untuk Yan yang lebih selamat."
-  }
+    "s5_tag": "Bersama, untuk Yan yang lebih selamat.",
+    "intro_flash": [
+      [
+        "12 BOOTH",
+        "image15.jpg"
+      ],
+      [
+        "PERMAINAN",
+        "image12.jpg"
+      ],
+      [
+        "PATIENT SAFETY",
+        "image25.jpg"
+      ],
+      [
+        "KOLABORASI",
+        "image17.jpg"
+      ],
+      [
+        "KOMUNITI",
+        "image13.png"
+      ],
+      [
+        "JOM KE YAN!",
+        "image3.jpg"
+      ]
+    ],
+    "intro_sub": "PAMERAN  ·  18 NOVEMBER 2026  ·  YAN, KEDAH"
+  },
+  "intro": true,
+  "caption_keep": [
+    "Hospital Yan Community Carnival",
+    "World AMR Awareness Week",
+    "One Health, One Action",
+    "Patient Safety Day",
+    "Fall Prevention Programme",
+    "Jawatankuasa Patient Safety",
+    "Doktor Tengku Nurshahril",
+    "Pengarah Hospital",
+    "Clinical Research Centre Negeri Sembilan",
+    "Negeri Sembilan",
+    "nursing research",
+    "antimicrobial resistance",
+    "Spinning Wheel",
+    "Mystery Box",
+    "Cone and Pearl",
+    "“Falling Love”",
+    "Patient Falls",
+    "Tolak Ubat Tidak Sah",
+    "Angkatan Pertahanan Awam",
+    "Unit Kecemasan dan Trauma",
+    "Unit Pencegahan dan Kawalan Infeksi",
+    "Persatuan Diabetes",
+    "Tabung Haji",
+    "JKN Kedah",
+    "kesan sampingan ubat",
+    "hand hygiene",
+    "Cawangan Penguatkuasaan Farmasi",
+    "haiwan berbisa",
+    "bilik darjah",
+    "gelang mutiara",
+    "biskut hangus",
+    "alat bantuan bergerak",
+    "faktor risiko jatuh",
+    "Yan, Kedah"
+  ],
+  "intro_gain": 0.9
 }
