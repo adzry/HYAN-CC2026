@@ -1,0 +1,62 @@
+{
+  "voice": {
+    "provider": "ElevenLabs",
+    "voice_id": "vLZJLcQMJCqxjrHGEVDO",
+    "voice_name": "Connery - Deep & Immersive Documentary",
+    "model_id": "eleven_v4"
+  },
+  "scenes": [
+    {
+      "id": 1,
+      "title": "The Hook & Yan Community Context",
+      "target_seconds": 30,
+      "audio": "audio/scene_1.mp3",
+      "chapter": null,
+      "narration": "Eighteen November, twenty twenty-six. A district hospital in Yan, Kedah, opens its gates — not to admit patients, but to invite an entire community in. Twelve booths. Hospital units, state enforcement, civil defence, clinics, community groups, even Islamic financial institutions. One idea connects them all: the safest patient is an informed one. This is the Hospital Yan Community Carnival. And this is how a hospital compound becomes a classroom."
+    },
+    {
+      "id": 2,
+      "title": "Interactive Booths & Public Engagement",
+      "target_seconds": 45,
+      "audio": "audio/scene_2.mp3",
+      "chapter": {
+        "num": "01",
+        "word": "PLAY"
+      },
+      "narration": "Start with the games — because that's where the learning hides. At the patient-falls booth, visitors spin a wheel and answer questions from a booklet called \"Falling Love.\" They toss pearl bracelets into cones to unlock three questions. Then comes the Mystery Box. Pick a card, get it right. Health staff face five bonus clinical questions — and a wrong answer means chewing a burnt biscuit. Next door, pharmacy turns antimicrobial resistance into archery: aim the antibiotic, hit the bacteria. And a capsule mascot poses for photos while teaching the five B's — right user, right medicine, right dose, right way, right time. It's learning disguised as play."
+    },
+    {
+      "id": 3,
+      "title": "Clinical Excellence & Patient Safety",
+      "target_seconds": 35,
+      "audio": "audio/scene_3.mp3",
+      "chapter": {
+        "num": "02",
+        "word": "PROTECT"
+      },
+      "narration": "But underneath the fun is serious clinical work. The Patient Safety Committee's fall-prevention programme trains visitors to recognise mobility aids and diagnose the risk factors that make patients fall — taking ward protocol straight to the public. The Emergency and Trauma Unit puts CPR, choking rescue and the defibrillator into visitors' own hands. Infection control drives home hand hygiene. And the medication-safety team carries one blunt message: side effects — don't ignore them. Report them."
+    },
+    {
+      "id": 4,
+      "title": "Inter-Departmental & Cross-State Synergy",
+      "target_seconds": 30,
+      "audio": "audio/scene_4.mp3",
+      "chapter": {
+        "num": "03",
+        "word": "CONNECT"
+      },
+      "narration": "No single unit could build this alone. Kedah's Pharmacy Enforcement Division brings TOBaTS — say no to illegal medicines. The Civil Defence Force teaches venomous-animal safety and disaster readiness. Klinik Nurul screens BMI, blood pressure and glucose, and registers PEKA B40. The Diabetes Association covers glucometers and foot care. Physiotherapists, YaPEIM and Tabung Haji complete the circle. And the reach crosses state lines: the nursing research team at Negeri Sembilan's Clinical Research Centre is part of this Patient Safety Day too."
+    },
+    {
+      "id": 5,
+      "title": "Vision 2026 & Official Closing",
+      "target_seconds": 25,
+      "audio": "audio/scene_5.mp3",
+      "chapter": {
+        "num": "04",
+        "word": "VISION"
+      },
+      "narration": "The timing is no accident. The carnival opens on day one of World AMR Awareness Week — One Health, One Action. It marks Patient Safety Day 2026 where the public can see it. Under the leadership of Hospital Director Doctor Tengku Nurshahril, Hospital Yan is betting on a simple idea: healthcare that walks out to meet its community. Hospital Yan Community Carnival, 2026. Together, for a safer Yan."
+    }
+  ]
+}

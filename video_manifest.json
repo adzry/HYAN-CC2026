@@ -1,0 +1,651 @@
+{
+  "event": {
+    "title": "Hospital Yan Community Carnival 2026: Pameran",
+    "date": "2026-11-18",
+    "venue": "Hospital Yan, Kedah",
+    "hospital_director": "Dr. Tengku Nurshahril",
+    "source_text": "Google Drive: 'SENARAI BOOTH PAMERAN- HOSPITAL YAN COMMUNITY CARNIVAL 2026.docx' (id 1RwsXjaakBvGg2WOuxtyTeh8YLRjANlaA, modified 2026-11-02)",
+    "source_images": "Google Drive: 'Copy of SENARAI BOOTH PAMERAN-...docx' (id 1y_gbDq0KohjB-lWpGyrycXXnpCwFsUaL, 2026-11-01). Original (13 MB) exceeded the 10 MB connector limit; its newer photos, if any, are not included.",
+    "booth_count": 12,
+    "by_category": {
+      "Hospital Yan": 5,
+      "JKN": 1,
+      "Komuniti": 5,
+      "Agensi Luar": 1
+    }
+  },
+  "booths": [
+    {
+      "booth": 1,
+      "exhibitor": "Cawangan Penguatkuasaan Farmasi JKN Kedah",
+      "category": "JKN",
+      "exhibitor_en": "Pharmacy Enforcement Division, Kedah State Health Department",
+      "theme": "Kempen TOLAK UBAT TIDAK SAH (TOBaTS)",
+      "activities": [
+        "Cara mengenali ubat berdaftar",
+        "Contoh ubat & produk tidak berdaftar / mengandungi bahan terlarang"
+      ],
+      "tags": [
+        "cross_departmental",
+        "medication_safety",
+        "enforcement"
+      ],
+      "images": [
+        {
+          "file": "images/image10.png",
+          "width": 427,
+          "height": 243,
+          "type": "logo",
+          "description": "TOBaTS campaign logo - 'Tolak Ubat Tidak Sah'",
+          "video_role": "logo",
+          "match_confidence": "high"
+        }
+      ]
+    },
+    {
+      "booth": 2,
+      "exhibitor": "Unit Farmasi (Kenali Ubat Anda QUMC)",
+      "category": "Hospital Yan",
+      "exhibitor_en": "Pharmacy Unit - Know Your Medicine",
+      "theme": "Kenali Ubat Anda - prinsip 5B (pengguna, ubat, dos, cara, masa betul)",
+      "activities": [
+        "Bergambar bersama Maskot Kapsul Ubat"
+      ],
+      "tags": [
+        "interactive",
+        "medication_safety",
+        "public_engagement"
+      ],
+      "images": [
+        {
+          "file": "images/image9.png",
+          "width": 317,
+          "height": 317,
+          "type": "logo",
+          "description": "'Kenali Ubat Anda' badge with capsule mascot",
+          "video_role": "logo",
+          "match_confidence": "high"
+        },
+        {
+          "file": "images/image16.png",
+          "width": 941,
+          "height": 1331,
+          "type": "poster",
+          "description": "MediTips Kenali Ubat Anda poster featuring mascot",
+          "video_role": "hero_poster",
+          "match_confidence": "high"
+        }
+      ]
+    },
+    {
+      "booth": 3,
+      "exhibitor": "Unit Farmasi (JK AMS & JK MedSafe)",
+      "category": "Hospital Yan",
+      "exhibitor_en": "Pharmacy Unit - Antimicrobial Stewardship & Medication Safety",
+      "theme": "WAAW 2026: One Health, One Action - Prevent AMR Now; #MedSafetyWeek Malaysia 2026: 'Kesan sampingan ubat - jangan abai, laporkan!'",
+      "activities": [
+        "Online Quiz AMS seminggu sebelum (staf & awam), tuntut hadiah pada hari pameran",
+        "Antibiotic-to-bacteria shoot (aktiviti memanah AMS)"
+      ],
+      "tags": [
+        "interactive",
+        "game",
+        "patient_safety",
+        "medication_safety"
+      ],
+      "images": [
+        {
+          "file": "images/image28.png",
+          "width": 811,
+          "height": 800,
+          "type": "poster",
+          "description": "World AMR Awareness Week 2026 poster, 18-24 November",
+          "video_role": "hero_poster",
+          "match_confidence": "high"
+        },
+        {
+          "file": "images/image11.png",
+          "width": 391,
+          "height": 552,
+          "type": "poster",
+          "description": "#MedSafetyWeek Malaysia infographic on side effects and reporting",
+          "video_role": "infographic",
+          "match_confidence": "high"
+        }
+      ]
+    },
+    {
+      "booth": 4,
+      "exhibitor": "Unit Pencegahan dan Kawalan Infeksi",
+      "category": "Hospital Yan",
+      "exhibitor_en": "Infection Prevention & Control Unit",
+      "theme": "Hand Hygiene",
+      "activities": [
+        "Aktiviti hand hygiene"
+      ],
+      "tags": [
+        "patient_safety",
+        "infection_control"
+      ],
+      "images": [
+        {
+          "file": "images/image4.jpg",
+          "width": 426,
+          "height": 426,
+          "type": "poster",
+          "description": "World Hand Hygiene Day 2026 poster - 'Clean hands. Safe lives.'",
+          "video_role": "hero_poster",
+          "match_confidence": "high"
+        }
+      ]
+    },
+    {
+      "booth": 5,
+      "exhibitor": "JK Patient Safety - Patient Falls (Fall Prevention & Intervention Programme)",
+      "category": "Hospital Yan",
+      "exhibitor_en": "Patient Safety Committee - Fall Prevention",
+      "lead": "KJ Nazatul Azni binti Nek",
+      "theme": "Patient Safety Day 2026 - pencegahan jatuh pesakit",
+      "activities": [
+        "Section A: Spinning Wheel + buku 'Falling Love'",
+        "Section B: Cone & Pearl (baling gelang mutiara 5x, 3 soalan)",
+        "Section C: Mystery Box (5 soalan bonus diagnosis risiko jatuh untuk anggota kesihatan; denda biskut hangus/keras)",
+        "Pameran & pembentangan patient fall",
+        "2025 recap: kenal alat bantuan bergerak, Spinning Wheel, susun atur & diagnosis faktor risiko jatuh"
+      ],
+      "collaboration": "Cenderahati daripada Nursing Research Team, Clinical Research Centre (CRC) Negeri Sembilan",
+      "tags": [
+        "interactive",
+        "game",
+        "patient_safety",
+        "fall_risk_assessment",
+        "cross_state"
+      ],
+      "images": [
+        {
+          "file": "images/image25.jpg",
+          "width": 521,
+          "height": 392,
+          "type": "photo",
+          "description": "2025 Section A board: identifying mobility aids (walker, crutches, wheelchair)",
+          "video_role": "activity_photo",
+          "match_confidence": "high"
+        },
+        {
+          "file": "images/image12.jpg",
+          "width": 413,
+          "height": 552,
+          "type": "photo",
+          "description": "2025 Section B: staff member with the spinning wheel game",
+          "video_role": "activity_photo",
+          "match_confidence": "high"
+        },
+        {
+          "file": "images/image3.jpg",
+          "width": 414,
+          "height": 554,
+          "type": "photo",
+          "description": "2025 Section B: visitor playing at the spinning wheel board",
+          "video_role": "activity_photo",
+          "match_confidence": "high"
+        },
+        {
+          "file": "images/image27.jpg",
+          "width": 495,
+          "height": 380,
+          "type": "poster",
+          "description": "'Preventing Falls - tips to reduce your risk' infographic",
+          "video_role": "infographic",
+          "match_confidence": "high"
+        },
+        {
+          "file": "images/image6.jpg",
+          "width": 674,
+          "height": 592,
+          "type": "photo",
+          "description": "2025 Section C: arrange fall-prevention steps / risk factor diagnosis board",
+          "video_role": "activity_photo",
+          "match_confidence": "high"
+        },
+        {
+          "file": "images/image2.jpg",
+          "width": 287,
+          "height": 383,
+          "type": "photo",
+          "description": "Cone & Pearl game - coloured cones with pearl bracelet",
+          "video_role": "activity_photo",
+          "match_confidence": "high"
+        },
+        {
+          "file": "images/image14.png",
+          "width": 225,
+          "height": 225,
+          "type": "graphic",
+          "description": "Mystery Box game graphic",
+          "video_role": "game_graphic",
+          "match_confidence": "high"
+        },
+        {
+          "file": "images/image15.jpg",
+          "width": 520,
+          "height": 293,
+          "type": "photo",
+          "description": "Booth crowd at Patient Safety Day exhibition",
+          "video_role": "crowd_photo",
+          "match_confidence": "high"
+        },
+        {
+          "file": "images/image17.jpg",
+          "width": 1024,
+          "height": 576,
+          "type": "photo",
+          "description": "Visitors and civil-defence officers at the falls booth",
+          "video_role": "crowd_photo",
+          "match_confidence": "high"
+        },
+        {
+          "file": "images/image29.jpg",
+          "width": 489,
+          "height": 652,
+          "type": "photo",
+          "description": "Participation gifts - pens and pouches",
+          "video_role": "gifts",
+          "match_confidence": "high"
+        },
+        {
+          "file": "images/image20.jpg",
+          "width": 637,
+          "height": 488,
+          "type": "photo",
+          "description": "Participation gifts - lilac drawstring pouches",
+          "video_role": "gifts",
+          "match_confidence": "high"
+        },
+        {
+          "file": "images/image23.jpg",
+          "width": 960,
+          "height": 1280,
+          "type": "photo",
+          "description": "Souvenir gifts in clear packets",
+          "video_role": "gifts",
+          "match_confidence": "medium",
+          "note": "Placed after CRC Negeri Sembilan line - likely the CRC souvenir"
+        },
+        {
+          "file": "images/image18.jpg",
+          "width": 960,
+          "height": 1280,
+          "type": "photo",
+          "description": "Boxed 'Best Wishes' souvenirs",
+          "video_role": "gifts",
+          "match_confidence": "medium",
+          "note": "Placed after CRC Negeri Sembilan line - likely the CRC souvenir"
+        }
+      ]
+    },
+    {
+      "booth": 6,
+      "exhibitor": "Icon Yan Wall and Bone Physiotherapy Centre",
+      "category": "Komuniti",
+      "exhibitor_en": "Wall and Bone Physiotherapy Centre",
+      "activities": [
+        "Pemeriksaan",
+        "Neck & head release"
+      ],
+      "tags": [
+        "community",
+        "clinical_service"
+      ],
+      "images": [
+        {
+          "file": "images/image21.png",
+          "width": 300,
+          "height": 300,
+          "type": "logo",
+          "description": "Wall and Bone Physiotherapy Centre logo",
+          "video_role": "logo",
+          "match_confidence": "high"
+        }
+      ]
+    },
+    {
+      "booth": 7,
+      "exhibitor": "Unit Kecemasan & Trauma Hospital Yan",
+      "category": "Hospital Yan",
+      "exhibitor_en": "Emergency & Trauma Unit",
+      "activities": [
+        "Hands-on CPR",
+        "Teknik choking",
+        "Penggunaan AED"
+      ],
+      "tags": [
+        "interactive",
+        "clinical_excellence",
+        "life_saving"
+      ],
+      "images": [],
+      "image_gap": "No CPR/ED image in source. The image placed here (image22, AADK logo) does not belong to this booth - see unmatched_images."
+    },
+    {
+      "booth": 8,
+      "exhibitor": "Klinik Nurul 24 Jam Gurun",
+      "category": "Komuniti",
+      "exhibitor_en": "Klinik Nurul 24-hour clinic, Gurun",
+      "activities": [
+        "Saringan BMI",
+        "BP",
+        "Blood glucose",
+        "PEKA B40"
+      ],
+      "tags": [
+        "community",
+        "screening"
+      ],
+      "images": [
+        {
+          "file": "images/image24.jpg",
+          "width": 313,
+          "height": 313,
+          "type": "photo",
+          "description": "Klinik Nurul 24 Jam shopfront",
+          "video_role": "logo",
+          "match_confidence": "high"
+        }
+      ]
+    },
+    {
+      "booth": 9,
+      "exhibitor": "Angkatan Pertahanan Awam Malaysia (APM) / JPAM Gurun",
+      "category": "Agensi Luar",
+      "exhibitor_en": "Malaysia Civil Defence Force, Gurun",
+      "activities": [
+        "Pengisian haiwan berbisa",
+        "Maklumat bencana",
+        "Ikatan & simpulan tali",
+        "Pengambilan anggota baru",
+        "Pameran peralatan operasi APM"
+      ],
+      "tags": [
+        "cross_agency",
+        "emergency_preparedness"
+      ],
+      "images": [
+        {
+          "file": "images/image8.png",
+          "width": 402,
+          "height": 207,
+          "type": "logo",
+          "description": "APM Civil Defence logo banner",
+          "video_role": "logo",
+          "match_confidence": "high"
+        }
+      ],
+      "note": "Document text says 'Angkatan Pertahanan Malaysia'; APM/JPAM and the logo refer to Angkatan Pertahanan Awam Malaysia (Civil Defence)."
+    },
+    {
+      "booth": 10,
+      "exhibitor": "Persatuan Diabetes Malaysia Daerah Yan",
+      "category": "Komuniti",
+      "exhibitor_en": "Diabetes Malaysia, Yan District",
+      "activities": [
+        "Cara guna glucometer",
+        "Tips penjagaan kaki",
+        "Kandungan gula minuman popular"
+      ],
+      "tags": [
+        "community",
+        "chronic_disease"
+      ],
+      "images": [
+        {
+          "file": "images/image19.png",
+          "width": 283,
+          "height": 283,
+          "type": "logo",
+          "description": "Diabetes Malaysia logo",
+          "video_role": "logo",
+          "match_confidence": "high"
+        }
+      ]
+    },
+    {
+      "booth": 11,
+      "exhibitor": "Yayasan Pembangunan Ekonomi Islam Malaysia (YaPEIM)",
+      "category": "Komuniti",
+      "exhibitor_en": "YaPEIM",
+      "activities": [
+        "Cuci emas percuma",
+        "Khidmat nasihat emas",
+        "Infak bersama YaPEIM",
+        "Skim-skim YaPEIM"
+      ],
+      "tags": [
+        "community",
+        "financial_wellbeing"
+      ],
+      "images": [
+        {
+          "file": "images/image1.jpg",
+          "width": 139,
+          "height": 139,
+          "type": "logo",
+          "description": "YaPEIM logo",
+          "video_role": "logo",
+          "match_confidence": "high",
+          "note": "Placed under Booth 12 in the document; matched to Booth 11 by content"
+        }
+      ]
+    },
+    {
+      "booth": 12,
+      "exhibitor": "Lembaga Tabung Haji Negeri Kedah",
+      "category": "Komuniti",
+      "exhibitor_en": "Tabung Haji Kedah",
+      "activities": [
+        "Buka akaun",
+        "Simpanan",
+        "Kemaskini maklumat",
+        "Pengaktifan THiJARI",
+        "Pendaftaran TH Khairat",
+        "Direct debit",
+        "Pendaftaran penama",
+        "Konsultasi",
+        "Hadiah tebusan"
+      ],
+      "tags": [
+        "community",
+        "financial_wellbeing",
+        "cross_departmental"
+      ],
+      "images": [
+        {
+          "file": "images/image5.png",
+          "width": 1200,
+          "height": 630,
+          "type": "logo",
+          "description": "Tabung Haji Kedah logo",
+          "video_role": "logo",
+          "match_confidence": "high",
+          "note": "Placed under Booth 11 in the document; matched to Booth 12 by content"
+        },
+        {
+          "file": "images/image26.png",
+          "width": 490,
+          "height": 694,
+          "type": "poster",
+          "description": "'Kempen Barakah Sihat bersama JKN Kedah' - TH x JKN Kedah campaign poster",
+          "video_role": "hero_poster",
+          "match_confidence": "high",
+          "note": "Placed under Booth 11 in the document; matched to Booth 12 by content"
+        },
+        {
+          "file": "images/image7.png",
+          "width": 319,
+          "height": 341,
+          "type": "poster",
+          "description": "THiJARI app and #MulaDenganTH / Jom Istito'ah campaign graphics",
+          "video_role": "infographic",
+          "match_confidence": "high",
+          "note": "Placed under Booth 11 in the document; matched to Booth 12 by content"
+        },
+        {
+          "file": "images/image13.png",
+          "width": 324,
+          "height": 330,
+          "type": "photo",
+          "description": "Tabung Haji counters serving public at a previous event",
+          "video_role": "crowd_photo",
+          "match_confidence": "high",
+          "note": "Placed under Booth 11 in the document; matched to Booth 12 by content"
+        }
+      ]
+    }
+  ],
+  "index": {
+    "interactive_games": [
+      {
+        "name": "Spinning Wheel + 'Falling Love' booklet",
+        "booth": 5
+      },
+      {
+        "name": "Cone & Pearl",
+        "booth": 5
+      },
+      {
+        "name": "Mystery Box",
+        "booth": 5
+      },
+      {
+        "name": "AMS archery: antibiotic vs bacteria",
+        "booth": 3
+      },
+      {
+        "name": "Online AMS quiz (prize claim on the day)",
+        "booth": 3
+      },
+      {
+        "name": "Photo with capsule mascot",
+        "booth": 2
+      },
+      {
+        "name": "Hands-on CPR / choking / AED",
+        "booth": 7
+      }
+    ],
+    "patient_safety_initiatives": [
+      {
+        "name": "Fall Prevention & Intervention Programme - patient fall risk assessment",
+        "booth": 5
+      },
+      {
+        "name": "#MedSafetyWeek - report adverse drug reactions",
+        "booth": 3
+      },
+      {
+        "name": "WAAW 2026 antimicrobial stewardship",
+        "booth": 3
+      },
+      {
+        "name": "Hand hygiene",
+        "booth": 4
+      },
+      {
+        "name": "Kenali Ubat Anda / 5B",
+        "booth": 2
+      },
+      {
+        "name": "TOBaTS - reject illegal medicines",
+        "booth": 1
+      }
+    ],
+    "collaborations": [
+      {
+        "partner": "JKN Kedah Pharmacy Enforcement",
+        "type": "state health department",
+        "booth": 1
+      },
+      {
+        "partner": "CRC Negeri Sembilan Nursing Research Team",
+        "type": "cross-state",
+        "booth": 5
+      },
+      {
+        "partner": "APM / JPAM Gurun",
+        "type": "external agency",
+        "booth": 9
+      },
+      {
+        "partner": "Klinik Nurul 24 Jam Gurun",
+        "type": "private primary care",
+        "booth": 8
+      },
+      {
+        "partner": "Wall and Bone Physiotherapy",
+        "type": "private allied health",
+        "booth": 6
+      },
+      {
+        "partner": "Persatuan Diabetes Malaysia Yan",
+        "type": "NGO",
+        "booth": 10
+      },
+      {
+        "partner": "YaPEIM",
+        "type": "foundation",
+        "booth": 11
+      },
+      {
+        "partner": "Lembaga Tabung Haji Kedah (Barakah Sihat with JKN Kedah)",
+        "type": "statutory body",
+        "booth": 12
+      }
+    ]
+  },
+  "unmatched_images": [
+    {
+      "file": "images/image22.jpg",
+      "description": "Agensi Antidadah Kebangsaan (AADK / NADA) logo",
+      "note": "Sits under Booth 7 (Emergency & Trauma) in the document, but AADK is not in the exhibitor list. Excluded from the video; confirm whether AADK is joining."
+    }
+  ],
+  "scene_map": {
+    "1": [
+      "image15.jpg",
+      "image17.jpg",
+      "image13.png",
+      "image28.png"
+    ],
+    "2": [
+      "image12.jpg",
+      "image3.jpg",
+      "image2.jpg",
+      "image14.png",
+      "image28.png",
+      "image16.png",
+      "image9.png"
+    ],
+    "3": [
+      "image25.jpg",
+      "image6.jpg",
+      "image27.jpg",
+      "image4.jpg",
+      "image11.png"
+    ],
+    "4": [
+      "image10.png",
+      "image8.png",
+      "image24.jpg",
+      "image19.png",
+      "image21.png",
+      "image1.jpg",
+      "image26.png",
+      "image23.jpg"
+    ],
+    "5": [
+      "image28.png",
+      "image15.jpg",
+      "image18.jpg",
+      "image20.jpg"
+    ]
+  }
+}
