@@ -12,7 +12,13 @@
       "target_seconds": 30,
       "audio": "audio/scene_1.mp3",
       "chapter": null,
-      "narration": "Eighteen November, twenty twenty-six. A district hospital in Yan, Kedah, opens its gates — not to admit patients, but to invite an entire community in. Twelve booths. Hospital units, state enforcement, civil defence, clinics, community groups, even Islamic financial institutions. One idea connects them all: the safest patient is an informed one. This is the Hospital Yan Community Carnival. And this is how a hospital compound becomes a classroom."
+      "narration": "Eighteen November, twenty twenty-six. A district hospital in Yan, Kedah, opens its gates — not to admit patients, but to invite an entire community in. Twelve booths. Hospital units, state enforcement, civil defence, clinics, community groups, even Islamic financial institutions. One idea connects them all: the safest patient is an informed one. This is the Hospital Yan Community Carnival. And this is how a hospital compound becomes a classroom.",
+      "cues": {
+        "district": "A district",
+        "twelve": "Twelve booths",
+        "idea": "One idea",
+        "classroom": "And this is how"
+      }
     },
     {
       "id": 2,
@@ -21,9 +27,20 @@
       "audio": "audio/scene_2.mp3",
       "chapter": {
         "num": "01",
-        "word": "PLAY"
+        "kicker": "CHAPTER 01 · PLAY",
+        "title": "PUBLIC ENGAGEMENT"
       },
-      "narration": "Start with the games — because that's where the learning hides. At the patient-falls booth, visitors spin a wheel and answer questions from a booklet called \"Falling Love.\" They toss pearl bracelets into cones to unlock three questions. Then comes the Mystery Box. Pick a card, get it right. Health staff face five bonus clinical questions — and a wrong answer means chewing a burnt biscuit. Next door, pharmacy turns antimicrobial resistance into archery: aim the antibiotic, hit the bacteria. And a capsule mascot poses for photos while teaching the five B's — right user, right medicine, right dose, right way, right time. It's learning disguised as play."
+      "narration": "Start with the games — because that's where the learning hides. At the patient-falls booth, visitors spin a wheel and answer questions from a booklet called \"Falling Love.\" They toss pearl bracelets into cones to unlock three questions. Then comes the Mystery Box. Pick a card, get it right. Health staff face five bonus clinical questions — and a wrong answer means chewing a burnt biscuit. Next door, pharmacy turns antimicrobial resistance into archery: aim the antibiotic, hit the bacteria. And a capsule mascot poses for photos while teaching the five B's — right user, right medicine, right dose, right way, right time. It's learning disguised as play.",
+      "cues": {
+        "falls": "At the patient-falls",
+        "toss": "They toss",
+        "mystery": "Then comes the Mystery",
+        "staff": "Health staff",
+        "wrong": "a wrong answer",
+        "archery": "Next door",
+        "mascot": "And a capsule",
+        "play": "It's learning"
+      }
     },
     {
       "id": 3,
@@ -32,9 +49,24 @@
       "audio": "audio/scene_3.mp3",
       "chapter": {
         "num": "02",
-        "word": "PROTECT"
+        "kicker": "CHAPTER 02 · PROTECT",
+        "title": "PATIENT SAFETY SHOWCASE"
       },
-      "narration": "But underneath the fun is serious clinical work. The Patient Safety Committee's fall-prevention programme trains visitors to recognise mobility aids and diagnose the risk factors that make patients fall — taking ward protocol straight to the public. The Emergency and Trauma Unit puts CPR, choking rescue and the defibrillator into visitors' own hands. Infection control drives home hand hygiene. And the medication-safety team carries one blunt message: side effects — don't ignore them. Report them."
+      "narration": "But underneath the fun is serious clinical work. The Patient Safety Committee's fall-prevention programme trains visitors to recognise mobility aids and diagnose the risk factors that make patients fall — taking ward protocol straight to the public. The Emergency and Trauma Unit puts CPR, choking rescue and the defibrillator into visitors' own hands. Infection control drives home hand hygiene. And the medication-safety team carries one blunt message: side effects — don't ignore them. Report them.",
+      "cues": {
+        "falls": "The Patient Safety",
+        "aids": "recognise mobility aids",
+        "risk": "diagnose the risk",
+        "er": "The Emergency",
+        "choking": "choking",
+        "aed": "defibrillator",
+        "hands": "into visitors",
+        "ipc": "Infection control",
+        "hygiene": "hand hygiene",
+        "medsafe": "And the medication",
+        "side": "side effects",
+        "report": "Report them"
+      }
     },
     {
       "id": 4,
@@ -43,9 +75,20 @@
       "audio": "audio/scene_4.mp3",
       "chapter": {
         "num": "03",
-        "word": "CONNECT"
+        "kicker": "CHAPTER 03 · CONNECT",
+        "title": "INTER-STATE COLLABORATION"
       },
-      "narration": "No single unit could build this alone. Kedah's Pharmacy Enforcement Division brings TOBaTS — say no to illegal medicines. The Civil Defence Force teaches venomous-animal safety and disaster readiness. Klinik Nurul screens BMI, blood pressure and glucose, and registers PEKA B40. The Diabetes Association covers glucometers and foot care. Physiotherapists, YaPEIM and Tabung Haji complete the circle. And the reach crosses state lines: the nursing research team at Negeri Sembilan's Clinical Research Centre is part of this Patient Safety Day too."
+      "narration": "No single unit could build this alone. Kedah's Pharmacy Enforcement Division brings TOBaTS — say no to illegal medicines. The Civil Defence Force teaches venomous-animal safety and disaster readiness. Klinik Nurul screens BMI, blood pressure and glucose, and registers PEKA B40. The Diabetes Association covers glucometers and foot care. Physiotherapists, YaPEIM and Tabung Haji complete the circle. And the reach crosses state lines: the nursing research team at Negeri Sembilan's Clinical Research Centre is part of this Patient Safety Day too.",
+      "cues": {
+        "p_jkn": "Kedah's Pharmacy",
+        "p_apm": "The Civil Defence",
+        "p_klinik": "Klinik Nurul",
+        "p_diab": "The Diabetes",
+        "p_physio": "Physiotherapists",
+        "p_yapeim": "YaPEIM",
+        "p_th": "Tabung Haji",
+        "route": "And the reach"
+      }
     },
     {
       "id": 5,
@@ -54,9 +97,159 @@
       "audio": "audio/scene_5.mp3",
       "chapter": {
         "num": "04",
-        "word": "VISION"
+        "kicker": "CHAPTER 04 · VISION",
+        "title": "VISION 2026"
       },
-      "narration": "The timing is no accident. The carnival opens on day one of World AMR Awareness Week — One Health, One Action. It marks Patient Safety Day 2026 where the public can see it. Under the leadership of Hospital Director Doctor Tengku Nurshahril, Hospital Yan is betting on a simple idea: healthcare that walks out to meet its community. Hospital Yan Community Carnival, 2026. Together, for a safer Yan."
+      "narration": "The timing is no accident. The carnival opens on day one of World AMR Awareness Week — One Health, One Action. It marks Patient Safety Day 2026 where the public can see it. Under the leadership of Hospital Director Doctor Tengku Nurshahril, Hospital Yan is betting on a simple idea: healthcare that walks out to meet its community. Hospital Yan Community Carnival, 2026. Together, for a safer Yan.",
+      "cues": {
+        "open": "The carnival opens",
+        "marks": "It marks",
+        "lead": "Under the leadership",
+        "walks": "healthcare that walks",
+        "end": "Hospital Yan Community Carnival, 2026",
+        "together": "Together"
+      }
     }
-  ]
+  ],
+  "lang": "en",
+  "out": "out/hyan_carnival_2026.mp4",
+  "music": null,
+  "tempo": 1.0,
+  "leads": [
+    0.35,
+    0.35,
+    0.35,
+    0.35,
+    0.35
+  ],
+  "tails": [
+    0.7,
+    0.7,
+    0.7,
+    0.7,
+    0.7
+  ],
+  "music_gains": [
+    0.11,
+    0.33,
+    0.62
+  ],
+  "caption_subs": [],
+  "ui": {
+    "s1_date_sub": "HOSPITAL YAN COMMUNITY CARNIVAL",
+    "s1_callout": "Booth exhibition",
+    "s1_lower": "HOSPITAL YAN  ·  KEDAH",
+    "s1_lower_sub": "Not to admit patients — to invite a community in.",
+    "s1_booths": "BOOTHS",
+    "s1_legend": [
+      [
+        "Hospital Yan",
+        "5"
+      ],
+      [
+        "JKN Kedah",
+        "1"
+      ],
+      [
+        "Agensi Luar",
+        "1"
+      ],
+      [
+        "Komuniti",
+        "5"
+      ]
+    ],
+    "s1_title1": "THE SAFEST PATIENT IS",
+    "s1_title2": "AN INFORMED ONE.",
+    "s1_title_hl": 1,
+    "s1_classroom": "How a hospital compound becomes a classroom",
+    "s2_wheel_sub": "+ the “Falling Love” booklet",
+    "s2_wheel_callout": "Spin & answer",
+    "s2_cone_n": [
+      [
+        "5",
+        "throws"
+      ],
+      [
+        "3",
+        "questions"
+      ]
+    ],
+    "s2_cone_callout": "Pearl bracelet",
+    "s2_staff": "Staff: 5 bonus fall-risk diagnosis questions",
+    "s2_wrong1": "Wrong answer?",
+    "s2_wrong2": "Chew a burnt biscuit.",
+    "s2_5b_items": [
+      [
+        "Pengguna betul",
+        "right user"
+      ],
+      [
+        "Ubat betul",
+        "right medicine"
+      ],
+      [
+        "Dos betul",
+        "right dose"
+      ],
+      [
+        "Cara betul",
+        "right way"
+      ],
+      [
+        "Masa betul",
+        "right time"
+      ]
+    ],
+    "s2_play": "Learning, disguised as play.",
+    "s3_head": "Underneath the fun: serious clinical work.",
+    "s3_fall_sub": "Identify mobility aids  →  assess risk factors  →  prevent the fall",
+    "s3_call_aids": "Mobility aids",
+    "s3_call_risk": "Fall risk factors",
+    "s3_hands": "…in visitors’ own hands.",
+    "s3_med_sub": "Side effects — don’t ignore them. Report them.",
+    "s4_head": "No single unit could build this alone.",
+    "s4_partners": [
+      [
+        "image10.png",
+        "JKN Kedah · TOBaTS",
+        "p_jkn"
+      ],
+      [
+        "image8.png",
+        "APM / JPAM Gurun",
+        "p_apm"
+      ],
+      [
+        "image24.jpg",
+        "Klinik Nurul 24 Jam",
+        "p_klinik"
+      ],
+      [
+        "image19.png",
+        "Diabetes Malaysia Yan",
+        "p_diab"
+      ],
+      [
+        "image21.png",
+        "Wall & Bone Physio",
+        "p_physio"
+      ],
+      [
+        "image1.jpg",
+        "YaPEIM",
+        "p_yapeim"
+      ],
+      [
+        "image5.png",
+        "Tabung Haji Kedah",
+        "p_th"
+      ]
+    ],
+    "s5_head": "The timing is no accident.",
+    "s5_psd_sub": "…celebrated where the public can see it.",
+    "s5_role": "Hospital Director, Hospital Yan",
+    "s5_quote": "Healthcare that walks out to meet its community.",
+    "s5_tag": "Together, for a safer Yan."
+  }
 }

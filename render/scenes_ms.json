@@ -1,0 +1,289 @@
+{
+  "lang": "ms",
+  "out": "out/hyan_carnival_2026_ms.mp4",
+  "voice": {
+    "provider": "ElevenLabs",
+    "voice_id": "vLZJLcQMJCqxjrHGEVDO",
+    "voice_name": "Connery - Deep & Immersive Documentary",
+    "model_id": "eleven_multilingual_v2",
+    "voice_settings": {
+      "stability": 0.42,
+      "similarity_boost": 0.82,
+      "style": 0.4,
+      "use_speaker_boost": true
+    }
+  },
+  "music": "audio/music/bed_ms.mp3",
+  "scenes": [
+    {
+      "id": 1,
+      "title": "Pembuka & Konteks Komuniti Yan",
+      "audio": "audio/ms/scene_1.mp3",
+      "narration": "Lapan belas November, dua ribu dua puluh enam. Sebuah hospital daerah di Yan, Kedah, membuka pintunya — bukan untuk merawat pesakit, tetapi untuk menjemput seluruh komuniti. Dua belas booth. Unit hospital, penguatkuasaan negeri, pertahanan awam, klinik, badan komuniti, malah institusi kewangan Islam. Satu idea menyatukan semuanya: pesakit paling selamat ialah pesakit yang berpengetahuan. Inilah Hospital Yan Community Carnival. Dan beginilah kawasan hospital bertukar menjadi sebuah bilik darjah.",
+      "cues": {
+        "district": "Sebuah hospital",
+        "twelve": "Dua belas booth",
+        "idea": "Satu idea",
+        "classroom": "Dan beginilah"
+      },
+      "chapter": null
+    },
+    {
+      "id": 2,
+      "title": "Booth Interaktif & Penglibatan Awam",
+      "audio": "audio/ms/scene_2.mp3",
+      "narration": "Mulakan dengan permainan — kerana di situlah ilmu tersembunyi. Di booth Patient Falls, pengunjung memutar Spinning Wheel dan menjawab soalan daripada buku kecil “Falling Love”. Mereka membaling gelang mutiara ke dalam kon untuk membuka tiga soalan — inilah Cone and Pearl. Kemudian, Mystery Box. Pilih satu kad, jawab dengan tepat. Anggota kesihatan pula berdepan lima soalan bonus klinikal — dan jawapan salah bermaksud mengunyah biskut hangus! Di sebelahnya, Unit Farmasi menukar isu antimicrobial resistance menjadi aktiviti memanah: bidik antibiotik, tepat ke sasaran bakteria. Dan maskot kapsul ubat sedia bergambar sambil mengajar prinsip lima B — pengguna betul, ubat betul, dos betul, cara betul, masa betul. Belajar, sambil bermain.",
+      "cues": {
+        "falls": "Di booth Patient Falls",
+        "toss": "Mereka membaling",
+        "mystery": "Kemudian, Mystery Box",
+        "staff": "Anggota kesihatan",
+        "wrong": "jawapan salah",
+        "archery": "Di sebelahnya",
+        "mascot": "Dan maskot",
+        "play": "Belajar, sambil"
+      },
+      "chapter": {
+        "num": "01",
+        "kicker": "BAB 01  ·  BOOTH INTERAKTIF",
+        "title": "PUBLIC ENGAGEMENT"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Kecemerlangan Klinikal & Patient Safety",
+      "audio": "audio/ms/scene_3.mp3",
+      "narration": "Namun di sebalik keseronokan ini, ada kerja klinikal yang serius. Fall Prevention Programme oleh Jawatankuasa Patient Safety melatih pengunjung mengenal alat bantuan bergerak dan menilai faktor risiko jatuh — protokol wad, dibawa terus kepada orang ramai. Unit Kecemasan dan Trauma meletakkan CPR, teknik choking, dan mesin AED terus ke tangan pengunjung. Unit Pencegahan dan Kawalan Infeksi menekankan hand hygiene. Dan pasukan MedSafety membawa satu mesej yang tegas: kesan sampingan ubat — jangan abai, laporkan!",
+      "cues": {
+        "falls": "Fall Prevention Programme",
+        "aids": "alat bantuan",
+        "risk": "faktor risiko",
+        "er": "Unit Kecemasan",
+        "choking": "teknik choking",
+        "aed": "mesin AED",
+        "hands": "terus ke tangan",
+        "ipc": "Unit Pencegahan",
+        "hygiene": "hand hygiene",
+        "medsafe": "Dan pasukan MedSafety",
+        "side": "kesan sampingan",
+        "report": "jangan abai"
+      },
+      "chapter": {
+        "num": "02",
+        "kicker": "BAB 02  ·  KECEMERLANGAN KLINIKAL",
+        "title": "PATIENT SAFETY SHOWCASE"
+      }
+    },
+    {
+      "id": 4,
+      "title": "Sinergi Antara Jabatan & Inter-State",
+      "audio": "audio/ms/scene_4.mp3",
+      "narration": "Tiada satu unit pun mampu melakukannya sendirian. Cawangan Penguatkuasaan Farmasi JKN Kedah membawa kempen TOBaTS — Tolak Ubat Tidak Sah. Angkatan Pertahanan Awam berkongsi ilmu haiwan berbisa dan kesiapsiagaan bencana. Klinik Nurul menjalankan saringan BMI, tekanan darah, glukosa dan PEKA B empat puluh. Persatuan Diabetes mengajar penggunaan glucometer dan penjagaan kaki. Fisioterapi, YaPEIM dan Tabung Haji melengkapkan lingkaran ini. Dan jangkauannya merentas negeri: pasukan nursing research dari Clinical Research Centre Negeri Sembilan turut bersama dalam Patient Safety Day ini.",
+      "cues": {
+        "p_jkn": "Cawangan Penguatkuasaan",
+        "p_apm": "Angkatan Pertahanan",
+        "p_klinik": "Klinik Nurul",
+        "p_diab": "Persatuan Diabetes",
+        "p_physio": "Fisioterapi",
+        "p_yapeim": "YaPEIM",
+        "p_th": "Tabung Haji",
+        "route": "Dan jangkauannya"
+      },
+      "chapter": {
+        "num": "03",
+        "kicker": "BAB 03  ·  SINERGI MERENTAS SEMPADAN",
+        "title": "INTER-STATE COLLABORATION"
+      }
+    },
+    {
+      "id": 5,
+      "title": "Wawasan 2026 & Penutup Rasmi",
+      "audio": "audio/ms/scene_5.mp3",
+      "narration": "Tarikh ini bukan kebetulan. Karnival ini bermula pada hari pertama World AMR Awareness Week — One Health, One Action. Ia juga menandakan Patient Safety Day dua ribu dua puluh enam, diraikan di hadapan masyarakat. Di bawah kepimpinan Pengarah Hospital, Doktor Tengku Nurshahril, Hospital Yan berpegang pada satu idea yang mudah: penjagaan kesihatan yang keluar menemui komunitinya. Hospital Yan Community Carnival, dua ribu dua puluh enam. Bersama, untuk Yan yang lebih selamat.",
+      "cues": {
+        "open": "Karnival ini bermula",
+        "marks": "Ia juga menandakan",
+        "lead": "Di bawah kepimpinan",
+        "walks": "penjagaan kesihatan yang keluar",
+        "end": "Hospital Yan Community Carnival, dua",
+        "together": "Bersama, untuk"
+      },
+      "chapter": {
+        "num": "04",
+        "kicker": "BAB 04  ·  WAWASAN & PENUTUP",
+        "title": "VISION 2026"
+      }
+    }
+  ],
+  "tempo": 1.07,
+  "leads": [
+    1.3,
+    1.7,
+    1.7,
+    1.7,
+    1.7
+  ],
+  "tails": [
+    0.45,
+    0.45,
+    0.45,
+    0.45,
+    2.6
+  ],
+  "music_gains": [
+    0.15,
+    0.38,
+    0.7
+  ],
+  "caption_subs": [
+    [
+      "Lapan belas November, dua ribu dua puluh enam",
+      "18 November 2026"
+    ],
+    [
+      "dua ribu dua puluh enam",
+      "2026"
+    ],
+    [
+      "Dua belas booth",
+      "12 booth"
+    ],
+    [
+      "lima soalan",
+      "5 soalan"
+    ],
+    [
+      "tiga soalan",
+      "3 soalan"
+    ],
+    [
+      "prinsip lima B",
+      "prinsip 5B"
+    ],
+    [
+      "PEKA B empat puluh",
+      "PEKA B40"
+    ],
+    [
+      "Doktor Tengku",
+      "Dr. Tengku"
+    ]
+  ],
+  "ui": {
+    "s1_date_sub": "HOSPITAL YAN COMMUNITY CARNIVAL",
+    "s1_callout": "Pameran booth",
+    "s1_lower": "HOSPITAL YAN  ·  KEDAH",
+    "s1_lower_sub": "Bukan untuk merawat — tetapi menjemput komuniti.",
+    "s1_booths": "BOOTH",
+    "s1_legend": [
+      [
+        "Hospital Yan",
+        "5"
+      ],
+      [
+        "JKN Kedah",
+        "1"
+      ],
+      [
+        "Agensi Luar",
+        "1"
+      ],
+      [
+        "Komuniti",
+        "5"
+      ]
+    ],
+    "s1_title1": "PESAKIT PALING SELAMAT",
+    "s1_title2": "IALAH YANG BERPENGETAHUAN.",
+    "s1_title_hl": 2,
+    "s1_classroom": "Kawasan hospital menjadi bilik darjah",
+    "s2_wheel_sub": "+ buku kecil “Falling Love”",
+    "s2_wheel_callout": "Putar & jawab",
+    "s2_cone_n": [
+      [
+        "5",
+        "balingan"
+      ],
+      [
+        "3",
+        "soalan"
+      ]
+    ],
+    "s2_cone_callout": "Gelang mutiara",
+    "s2_staff": "Staf: 5 soalan bonus diagnosis risiko jatuh",
+    "s2_wrong1": "Jawapan salah?",
+    "s2_wrong2": "Kunyah biskut hangus!",
+    "s2_5b_items": [
+      [
+        "Pengguna betul",
+        "right user"
+      ],
+      [
+        "Ubat betul",
+        "right medicine"
+      ],
+      [
+        "Dos betul",
+        "right dose"
+      ],
+      [
+        "Cara betul",
+        "right way"
+      ],
+      [
+        "Masa betul",
+        "right time"
+      ]
+    ],
+    "s2_play": "Belajar, sambil bermain.",
+    "s3_head": "Di sebalik keseronokan: kerja klinikal yang serius.",
+    "s3_fall_sub": "Kenal alat bantuan  →  nilai faktor risiko  →  cegah jatuh",
+    "s3_call_aids": "Alat bantuan bergerak",
+    "s3_call_risk": "Faktor risiko jatuh",
+    "s3_hands": "…terus ke tangan pengunjung.",
+    "s3_med_sub": "Laporkan melalui doktor, ahli farmasi atau NPRA.",
+    "s4_head": "Tiada satu unit pun mampu melakukannya sendirian.",
+    "s4_partners": [
+      [
+        "image10.png",
+        "JKN Kedah · TOBaTS",
+        "p_jkn"
+      ],
+      [
+        "image8.png",
+        "APM / JPAM Gurun",
+        "p_apm"
+      ],
+      [
+        "image24.jpg",
+        "Klinik Nurul 24 Jam",
+        "p_klinik"
+      ],
+      [
+        "image19.png",
+        "Diabetes Malaysia Yan",
+        "p_diab"
+      ],
+      [
+        "image21.png",
+        "Wall & Bone Physio",
+        "p_physio"
+      ],
+      [
+        "image1.jpg",
+        "YaPEIM",
+        "p_yapeim"
+      ],
+      [
+        "image5.png",
+        "Tabung Haji Kedah",
+        "p_th"
+      ]
+    ],
+    "s5_head": "Tarikh ini bukan kebetulan.",
+    "s5_psd_sub": "…diraikan di hadapan masyarakat.",
+    "s5_role": "Pengarah Hospital, Hospital Yan",
+    "s5_quote": "Penjagaan kesihatan yang keluar menemui komunitinya.",
+    "s5_tag": "Bersama, untuk Yan yang lebih selamat."
+  }
+}

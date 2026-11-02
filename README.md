@@ -9,7 +9,7 @@
 | `storyboard.md` | 401-word, 5-scene voiceover script with a shot-by-shot storyboard |
 | `images/` | 29 images extracted from the source .docx |
 | `audio/scene_1..5.mp3` | ElevenLabs voiceover (voice: *Connery – Deep & Immersive Documentary*) |
-| `render/scenes.json` | Narration text, voice and target timings (single source for TTS and renderer) |
+| `render/scenes.json`, `render/scenes_ms.json` | Per-language narration, cue phrases, on-screen text, chapter cards, timing and mix settings |
 | `render/render.py` | Pillow + FFmpeg renderer: dark theme, kinetic type, Ken Burns photo cards, chapter cards, progress bar, captions |
 | `render/elevenlabs_tts.py` | REST fallback that generates the MP3s with `ELEVENLABS_API_KEY` |
 | `render_video.sh` | One-command render |
@@ -17,10 +17,16 @@
 ## Render
 
 ```bash
-./render_video.sh            # -> out/hyan_carnival_2026.mp4 (1920x1080, 30 fps)
-./render_video.sh --preview  # fast 960x540 check
-./render_video.sh --music bed.mp3   # optional music, auto-ducked under the voice
+./render_video.sh                    # English -> out/hyan_carnival_2026.mp4 (1920x1080, 30 fps)
+./render_video.sh --lang ms          # Bahasa Melayu -> out/hyan_carnival_2026_ms.mp4 (music + SFX)
+./render_video.sh --lang ms --preview
+./render_video.sh --whatsapp out/hyan_carnival_2026_ms.mp4   # ~70 MB 1080p copy
 ```
+
+**Bahasa Melayu version** (`render/scenes_ms.json`, `storyboard_ms.md`, `audio/ms/`): narration by
+ElevenLabs Multilingual v2 (Connery), technical terms kept in English, ElevenLabs Music bed
+(`audio/music/bed_ms.mp3`) ducked under the voice and swelling at chapter transitions,
+synthesized whoosh/impact effects, word-accurate sync from ElevenLabs Scribe timestamps.
 
 Needs `python3` (Pillow, numpy), `ffmpeg` and `ffprobe`. Each scene runs as long
 as its MP3, and visual cues are placed where the narrator says the matching
