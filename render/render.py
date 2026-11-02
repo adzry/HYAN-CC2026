@@ -1178,6 +1178,16 @@ def closing_scene(cv, c, t):
         rect(cv, (160, 780, 172, 930), YEL, a * p)
         reveal(cv, text_img("Dr. Tengku Nurshahril", "black", 64, INK), 200, 790, ease_expo((t - s3 - 0.55) / 0.5), a)
         paste(cv, text_img(S("s5_role"), "semi", 36, YEL), (204, 870), a * ease_out((t - s3 - 0.8) / 0.4))
+        photo = director_photo()
+        if photo:
+            # portrait in a pulsing ring beside the name card, popping in as the name is spoken
+            pulse = ((t - s3) % 2.0) / 2.0
+            ring = _disc_img(int(205 + 35 * pulse), INK, 4)
+            paste(cv, ring, (1580 - ring.width / 2, 700 - ring.height / 2), a * (1 - pulse) * 0.6)
+            pp = ease_back((t - s3 - 0.5) / 0.5)
+            if pp > 0:
+                im = portrait_disc(photo, max(4, int(190 * (0.5 + 0.5 * pp))))
+                paste(cv, im, (1580 - im.width / 2, 700 - im.height / 2), a * clamp(pp))
         q = ease_expo((t - c.cue("walks")) / 0.55)
         if q:
             qt = text_img(S("s5_quote"), "black", fit_size(S("s5_quote"), "black", 46, 1500), BG)
@@ -1197,6 +1207,32 @@ def closing_scene(cv, c, t):
         tg = c.cue("together")
         ti = text_img(S("s5_tag"), "semi", 52, INK)
         reveal(cv, ti, W / 2 - ti.width / 2, H / 2 + 190, ease_expo((t - tg) / 0.6), a)
+
+@lru_cache(maxsize=1)
+def director_photo():
+    """images/pengarah.(jpg|jpeg|png) if provided, else None."""
+    for ext in ("jpg", "jpeg", "png", "JPG", "JPEG", "PNG"):
+        if os.path.exists(os.path.join(ROOT, "images", f"pengarah.{ext}")):
+            return f"pengarah.{ext}"
+    return None
+
+@lru_cache(maxsize=64)
+def portrait_disc(name, r):
+    """Photo cover-cropped into a circle (biased to the top, where faces are), with a yellow rim."""
+    src = src_img(name)
+    d = 2 * r
+    s = max(d / src.width, d / src.height)
+    im = src.resize((max(d, int(src.width * s)), max(d, int(src.height * s))), Image.LANCZOS)
+    x0 = (im.width - d) // 2
+    y0 = int((im.height - d) * 0.2)
+    face = im.crop((x0, y0, x0 + d, y0 + d)).convert("RGBA")
+    mask = Image.new("L", (d, d), 0)
+    ImageDraw.Draw(mask).ellipse((0, 0, d - 1, d - 1), fill=255)
+    face.putalpha(mask)
+    out = Image.new("RGBA", (d + 16, d + 16), (0, 0, 0, 0))
+    ImageDraw.Draw(out).ellipse((0, 0, d + 15, d + 15), fill=YEL + (255,))
+    out.alpha_composite(face, (8, 8))
+    return out
 
 KINDS = {"hook": hook_scene, "booth": booth_scene, "closing": closing_scene}
 
