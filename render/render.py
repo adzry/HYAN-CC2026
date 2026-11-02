@@ -930,6 +930,277 @@ def intro_frame(plan, t):
     return cv
 
 
+# ------------------------------------------------------------ v4 scene kinds
+BOOTH_CATS = ["JKN", "Hospital Yan", "Hospital Yan", "Hospital Yan", "Hospital Yan", "Komuniti", "Hospital Yan",
+              "Komuniti", "Agensi Luar", "Komuniti", "Komuniti", "Komuniti"]
+
+def booth_tracker(cv, n, t):
+    """12-dot progress strip, top right; current booth highlighted."""
+    x0, y = 1430, 62
+    for k in range(1, 13):
+        x = x0 + (k - 1) * 38
+        if k < n:
+            im = _disc_img(9, INK, 0)
+            paste(cv, im, (x - im.width / 2, y - im.height / 2), 0.9)
+        elif k == n:
+            r = 17 + 2 * math.sin(t * 6)
+            im = _disc_img(int(r), YEL, 0)
+            paste(cv, im, (x - im.width / 2, y - im.height / 2))
+            num = text_img(str(k), "black", 20, BG)
+            paste(cv, num, (x - num.width / 2 + 1, y - 14))
+        else:
+            im = _disc_img(9, INK, 3)
+            paste(cv, im, (x - im.width / 2, y - im.height / 2), 0.55)
+
+@lru_cache(maxsize=64)
+def _disc_img(r, color, ring):
+    im = Image.new("RGBA", (2 * r + 4, 2 * r + 4), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    if ring:
+        d.ellipse((2, 2, 2 * r + 1, 2 * r + 1), outline=color + (255,), width=ring)
+    else:
+        d.ellipse((2, 2, 2 * r + 1, 2 * r + 1), fill=color + (255,))
+    return im
+
+def tick_box(cv, x, y, p, q, alpha=1.0):
+    """Checkbox at (x, y): p = box pop progress, q = tick draw progress."""
+    s = 46
+    if p <= 0:
+        return
+    sz = s * clamp(ease_back(p))
+    rect(cv, (x + s / 2 - sz / 2, y + s / 2 - sz / 2, x + s / 2 + sz / 2, y + s / 2 + sz / 2), YEL, alpha)
+    if q > 0:
+        a, b, c = (x + 10, y + 24), (x + 20, y + 35), (x + 37, y + 12)
+        q1, q2 = clamp(q / 0.4), clamp((q - 0.4) / 0.6)
+        line(cv, a, (a[0] + (b[0] - a[0]) * q1, a[1] + (b[1] - a[1]) * q1), 1, BG, 6, alpha)
+        if q2 > 0:
+            line(cv, b, (b[0] + (c[0] - b[0]) * q2, b[1] + (c[1] - b[1]) * q2), 1, BG, 6, alpha)
+
+def ecg_panel(cv, cx, cy, t, t_in, alpha=1.0):
+    a = env(t, t_in, 1e9, 0.4, 0.01) * alpha
+    if a <= 0:
+        return
+    w, h = 720, 460
+    x0, y0 = cx - w / 2, cy - h / 2
+    sh_im, pad = shadow(w, h)
+    paste(cv, sh_im, (x0 - pad, y0 - pad), a * 0.8)
+    rect(cv, (x0, y0, x0 + w, y0 + h), BG, a * 0.9)
+    rect(cv, (x0, y0, x0 + 10, y0 + h), RED, a)
+    # scrolling ECG trace
+    pts = []
+    phase = (t - t_in) * 260
+    for k in range(0, w - 60, 6):
+        u = ((k + phase) % 240) / 240.0
+        if 0.40 < u < 0.44:
+            v = -110 * (u - 0.40) / 0.04
+        elif 0.44 <= u < 0.50:
+            v = -110 + 170 * (u - 0.44) / 0.06
+        elif 0.50 <= u < 0.53:
+            v = 60 - 60 * (u - 0.50) / 0.03
+        elif 0.65 < u < 0.75:
+            v = -22 * math.sin(math.pi * (u - 0.65) / 0.10)
+        else:
+            v = 0
+        pts.append((x0 + 30 + k, y0 + 190 + v))
+    layer = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    ImageDraw.Draw(layer).line([(px - x0, py - y0) for px, py in pts], fill=RED + (255,), width=6, joint="curve")
+    paste(cv, layer, (x0, y0), a)
+    ti = text_img("CPR · CHOKING · AED", "black", 60, INK)
+    paste(cv, ti, (cx - ti.width / 2, y0 + h - 130), a)
+    sub = text_img("HANDS-ON", "mono", 30, YEL, tracking=4)
+    paste(cv, sub, (cx - sub.width / 2, y0 + h - 56), a)
+
+def media_block(cv, m, cx, cy, t_in, t_out, t):
+    if m["img"] == "@ecg":
+        ecg_panel(cv, cx, cy, t, t_in)
+        return
+    if m.get("style") == "disc":
+        a = env(t, t_in, t_out, 0.4, 0.3)
+        if a <= 0:
+            return
+        fl = 10 * math.sin((t - t_in) * 1.6)
+        pulse = ((t - t_in) % 2.0) / 2.0
+        ring = _disc_img(int(250 + 40 * pulse), INK, 4)
+        paste(cv, ring, (cx - ring.width / 2, cy + fl - ring.height / 2), a * (1 - pulse) * 0.6)
+        logo_disc(cv, m["img"], cx, cy + fl, 240, t_in, t, a)
+    else:
+        card(cv, m["img"], cx, cy, 780, 540, t_in, t_out, t, drift=(0.5, 0.45))
+
+def booth_scene(cv, c, t):
+    sc, ui = c.sc, c.ui
+    n = sc["booth"]
+    T1 = max(0.8, c.lead)
+    # 1) number slam
+    if t < T1 + 0.35:
+        p = ease_back(t / 0.42)
+        out = ease_io((t - (T1 - 0.2)) / 0.45)
+        a = 1 - out
+        sc_ = 1 + 0.25 * out
+        bi = text_img("BOOTH", "black", int(110 * sc_ / 2) * 2, INK, tracking=8)
+        ni = text_img(f"{n:02d}", "black", int(340 * sc_ / 4) * 4, YEL)
+        yb = H / 2 - 250
+        reveal(cv, bi, W / 2 - bi.width / 2, yb, ease_expo(t / 0.35), a)
+        if p > 0:
+            paste(cv, ni, (W / 2 - ni.width / 2, yb + 110 + 60 * (1 - clamp(p))), a * clamp(p))
+    # 2) header: badge, category chip, exhibitor, theme
+    th = T1 - 0.15
+    if t >= th:
+        label(cv, f"BOOTH {n:02d}", (120, 130), th, t, 52)
+        cat = sc["category"]
+        ct = text_img(ui["cat_label"][cat], "mono", 26, INK, tracking=3)
+        pc = ease_out((t - th - 0.3) / 0.4)
+        bx = 120 + text_img(f"BOOTH {n:02d}", "black", 52).width + 50 + 20
+        rect(cv, (bx, 140, bx + ct.width + 64, 190), BG, 0.55 * pc)
+        dot = _disc_img(9, CAT_COL[cat], 0)
+        paste(cv, dot, (bx + 18, 156), pc)
+        paste(cv, ct, (bx + 44, 147), pc)
+        nm = sc["exhibitor"]
+        ni = text_img(nm, "black", fit_size(nm, "black", 76, 1680), INK)
+        reveal(cv, ni, 116, 222, ease_expo((t - th - 0.2) / 0.55))
+        if sc.get("theme"):
+            subline(cv, sc["theme"], (122, 228 + ni.height + 4), th + 0.5, t, 32, YEL)
+    # 3) media (left), cycling at cues
+    media = sc["media"]
+    starts = [T1] + [c.cue(f"m{j}") for j in range(1, len(media))]
+    for j, m in enumerate(media):
+        t_out = starts[j + 1] + 0.3 if j + 1 < len(media) else c.dur + 1
+        media_block(cv, m, 540, 680, starts[j], t_out, t)
+    # 4) activity checklist (right)
+    x0, y0, sp = 1010, 470, 84
+    hp = ease_out((t - T1 - 0.1) / 0.4)
+    paste(cv, text_img(ui["list_head"], "mono", 26, INK, tracking=3), (x0, y0 - 62), hp)
+    rect(cv, (x0, y0 - 22, x0 + 300 * ease_expo((t - T1) / 0.6), y0 - 18), YEL)
+    for k, it in enumerate(sc["items"]):
+        tk = c.cue(f"i{k}")
+        y = y0 + k * sp
+        ghost = ease_out((t - T1 - 0.2 - k * 0.08) / 0.4)
+        on = clamp((t - tk) / 0.25)
+        txt = it["text"]
+        fs = fit_size(txt, "semi", 38, 820)
+        ti_on = text_img(txt, "semi", fs, INK)
+        if on < 1:
+            rect(cv, (x0, y + 2, x0 + 46, y + 48), INK, 0.22 * ghost)
+            paste(cv, ti_on, (x0 + 70, y + 2), 0.38 * ghost * (1 - on))
+        tick_box(cv, x0, y + 2, (t - tk) / 0.35, (t - tk - 0.15) / 0.35)
+        if on > 0:
+            paste(cv, ti_on, (x0 + 70 + 18 * (1 - ease_out(on)), y + 2), on)
+    tg = sc.get("tagline")
+    if tg:
+        tt = c.cue("tag")
+        ti = text_img(tg["text"], "black", fit_size(tg["text"], "black", 54, 860), YEL)
+        reveal(cv, ti, x0, y0 + len(sc["items"]) * sp + 30, ease_expo((t - tt) / 0.5))
+    booth_tracker(cv, n, t)
+
+
+def hook_scene(cv, c, t):
+    t_car, t12, tmis, ttour = c.cue("carnival"), c.cue("twelve"), c.cue("mission"), c.cue("tour")
+    a = env(t, 0, t_car + 0.3, 0.01, 0.35)
+    if a:
+        date = "18.11.2026"
+        nch = int(clamp((t - 0.1) / 0.9) * len(date) + 0.999) if t > 0.1 else 0
+        ti = text_img(date, "mono", 230, INK)
+        x = W / 2 - ti.width / 2
+        if nch:
+            paste(cv, text_img(date[:nch], "mono", 230, INK), (x, H / 2 - ti.height / 2 - 30), a)
+        cw = text_img(date[:nch], "mono", 230, INK).width if nch else 0
+        if (t * 2) % 1 < 0.6:
+            rect(cv, (x + cw + 8, H / 2 - 110, x + cw + 26, H / 2 + 90), YEL, a)
+        subline(cv, "HOSPITAL YAN  ·  KEDAH", (x + 6, H / 2 + 120), 1.0, t, 40, INK, a)
+    box = card(cv, "image15.jpg", 760, H / 2 - 20, 1180, 760, t_car, t12 + 0.3, t, drift=(0.7, 0.4))
+    a = env(t, t_car, t12 + 0.3)
+    if a:
+        kinetic(cv, "BUKAN SEKADAR", 1560, 420, t_car + 0.2, t, 64, INK, alpha=a, max_w=600)
+        kinetic(cv, "HOSPITAL —", 1560, 500, t_car + 0.35, t, 64, INK, alpha=a, max_w=600)
+        boxes = kinetic(cv, "KARNIVAL!", 1560, 610, t_car + 0.6, t, 96, YEL, draw=False, max_w=600)
+        highlighter(cv, boxes[0][1:], t_car + 0.9, t, MAGENTA, 0.9 * a)
+        kinetic(cv, "KARNIVAL!", 1560, 610, t_car + 0.6, t, 96, YEL, alpha=a, max_w=600)
+    a = env(t, t12, tmis + 0.2)
+    if a:
+        nn = int(round(12 * ease_out((t - t12) / 1.2)))
+        paste(cv, text_img(f"{nn:02d}", "black", 330, YEL), (180, 250), a)
+        reveal(cv, text_img("BOOTH", "black", 110, INK, tracking=4), 200, 600, ease_expo((t - t12 - 0.3) / 0.5), a)
+        for k, cat in enumerate(BOOTH_CATS):
+            p = ease_back((t - t12 - 0.3 - k * 0.08) / 0.45)
+            gx, gy = 900 + (k % 6) * 150, 330 + (k // 6) * 150
+            if p > 0:
+                im = _disc_img(max(2, int(52 * p)), CAT_COL[cat], 0)
+                paste(cv, im, (gx - im.width / 2, gy - im.height / 2), a)
+                num = text_img(str(k + 1), "black", 38, BG)
+                paste(cv, num, (gx - num.width / 2, gy - 28), a * clamp(p))
+        keys = [("Hospital Yan", "Hospital Yan", "5"), ("JKN", "JKN Kedah", "1"), ("Agensi Luar", "Agensi Luar", "1"), ("Komuniti", "Komuniti", "5")]
+        for k, (key, nm, ct) in enumerate(keys):
+            p = ease_out((t - t12 - 1.4 - k * 0.12) / 0.4)
+            y = 660 + k * 58
+            rect(cv, (900, y + 8, 930, y + 38), CAT_COL[key], a * p)
+            paste(cv, text_img(f"{nm}  ×{ct}", "semi", 36, INK), (950 - 20 * (1 - p), y), a * p)
+    a = env(t, tmis, ttour + 0.2)
+    if a:
+        kinetic(cv, "PESAKIT YANG BERPENGETAHUAN", W / 2, H / 2 - 90, tmis, t, 100, INK, alpha=a, max_w=1600)
+        boxes = kinetic(cv, "= PESAKIT PALING SELAMAT", W / 2, H / 2 + 60, tmis + 0.5, t, 100, INK, draw=False, max_w=1600)
+        highlighter(cv, (boxes[-1][1] - boxes[-2][3] - 30, boxes[-1][2], boxes[-1][3] + boxes[-2][3] + 30, boxes[-1][4]), tmis + 1.0, t, RED, 0.9 * a)
+        kinetic(cv, "= PESAKIT PALING SELAMAT", W / 2, H / 2 + 60, tmis + 0.5, t, 100, INK, alpha=a, max_w=1600)
+    a = env(t, ttour, c.dur + 1, 0.3, 0.01)
+    if a:
+        kinetic(cv, "JOM JELAJAH!", W / 2, 330, ttour, t, 130, YEL, alpha=a)
+        span = max(1.5, c.dur - ttour - 1.2)
+        for k in range(12):
+            tk = ttour + 0.5 + span * k / 12
+            p = ease_back((t - tk) / 0.4)
+            x = 175 + k * 143
+            if k:
+                line(cv, (x - 143 + 52, 600), (x - 52, 600), ease_io((t - tk + 0.1) / 0.3), INK, 4, a * 0.7)
+            if p > 0:
+                im = _disc_img(max(2, int(50 * p)), CAT_COL[BOOTH_CATS[k]], 0)
+                paste(cv, im, (x - im.width / 2, 600 - im.height / 2), a)
+                num = text_img(f"{k+1:02d}", "black", 36, BG)
+                paste(cv, num, (x - num.width / 2, 600 - 26), a * clamp(p))
+        q = ease_out((t - ttour - 0.8) / 0.5)
+        ti = text_img("BOOTH 01  →  BOOTH 12", "mono", 40, INK, tracking=3)
+        paste(cv, ti, (W / 2 - ti.width / 2, 720), a * q)
+
+
+def closing_scene(cv, c, t):
+    S = c.s
+    s1, s2, s3, s4 = c.cue("open"), c.cue("marks"), c.cue("lead"), c.cue("end")
+    s1 = min(s1, c.lead)
+    card(cv, "image28.png", 560, 540, 760, 820, s1, s3 + 0.3, t, drift=(0.5, 0.3))
+    a = env(t, s1, s3 + 0.3)
+    if a:
+        label(cv, "18–24 NOV  ·  WAAW 2026", (1020, 300), s1 + 0.3, t, 50, alpha=a)
+        subline(cv, "One Health, One Action: Prevent AMR Now", (1026, 400), s1 + 0.7, t, 36, INK, a)
+        reveal(cv, text_img("PATIENT SAFETY", "black", 100, INK), 1020, 520, ease_expo((t - s2) / 0.5), a)
+        reveal(cv, text_img("DAY 2026", "black", 100, YEL), 1020, 630, ease_expo((t - s2 - 0.15) / 0.5), a)
+    card(cv, "image15.jpg", W / 2, H / 2 - 60, 1600, 860, s3, s4 + 0.3, t, zoom=0.08, drift=(0.3, 0.5))
+    a = env(t, s3, s4 + 0.3)
+    if a:
+        p = ease_expo((t - s3 - 0.4) / 0.55)
+        rect(cv, (160, 780, 160 + 1100 * p, 930), BG, a * 0.92)
+        rect(cv, (160, 780, 172, 930), YEL, a * p)
+        reveal(cv, text_img("Dr. Tengku Nurshahril", "black", 64, INK), 200, 790, ease_expo((t - s3 - 0.55) / 0.5), a)
+        paste(cv, text_img(S("s5_role"), "semi", 36, YEL), (204, 870), a * ease_out((t - s3 - 0.8) / 0.4))
+        q = ease_expo((t - c.cue("walks")) / 0.55)
+        if q:
+            qt = text_img(S("s5_quote"), "black", fit_size(S("s5_quote"), "black", 46, 1500), BG)
+            rect(cv, (160, 160, 160 + (qt.width + 60) * q, 260), YEL, a)
+            reveal(cv, qt, 190, 182, ease_expo((t - c.cue("walks") - 0.15) / 0.5), a)
+    a = env(t, s4, c.dur + 1, 0.4, 0.01)
+    if a:
+        tau = t - s4
+        draw_confetti(cv, tau - 0.3, W / 2, H / 2 - 120)
+        kinetic(cv, "JUMPA ANDA DI", W / 2, H / 2 - 270, s4, t, 60, INK, alpha=a)
+        kinetic(cv, "HOSPITAL YAN", W / 2, H / 2 - 150, s4 + 0.15, t, 150, INK, alpha=a)
+        kinetic(cv, "COMMUNITY CARNIVAL 2026", W / 2, H / 2 - 10, s4 + 0.35, t, 96, YEL, alpha=a)
+        q = ease_expo((t - s4 - 0.6) / 0.7)
+        rect(cv, (W / 2 - 420 * q, H / 2 + 80, W / 2 + 420 * q, H / 2 + 86), INK, a)
+        ti = text_img("18 NOVEMBER 2026  ·  HOSPITAL YAN, KEDAH", "mono", 34, INK, tracking=2)
+        paste(cv, ti, (W / 2 - ti.width / 2, H / 2 + 110), a * ease_out((t - s4 - 0.8) / 0.6))
+        tg = c.cue("together")
+        ti = text_img(S("s5_tag"), "semi", 52, INK)
+        reveal(cv, ti, W / 2 - ti.width / 2, H / 2 + 190, ease_expo((t - tg) / 0.6), a)
+
+KINDS = {"hook": hook_scene, "booth": booth_scene, "closing": closing_scene}
+
+
 class Plan:
     def __init__(self, cfg, durations, leads, timings, captions, intro=0.0, beat=0.5):
         self.cfg, self.durs, self.leads, self.timings, self.captions = cfg, durations, leads, timings, captions
@@ -967,10 +1238,11 @@ class Plan:
         if i < 0:
             cv = intro_frame(self, t)
         else:
-            cv = backdrop(i, t)
             sc = self.cfg["scenes"][i]
+            cv = backdrop(sc.get("palette", i) % len(PALETTES), t)
             lt = t - self.starts[i]
-            SCENES[i](cv, Ctx(sc, self.timings[i], self.durs[i], self.leads[i], self.ui), lt)
+            fn = KINDS[sc["kind"]] if "kind" in sc else SCENES[i]
+            fn(cv, Ctx(sc, self.timings[i], self.durs[i], self.leads[i], self.ui), lt)
             if (i > 0 or self.intro) and lt < 0.6:          # motion cut: settle-in zoom after each wipe
                 z = 1 + 0.05 * (1 - ease_out(lt / 0.6))
                 zw, zh = int(W / z), int(H / z)
@@ -1073,17 +1345,7 @@ def add(buf, clip, t):
     j = min(len(buf), i + len(clip))
     buf[max(i, 0):j] += clip[max(0, -i):j - i]
 
-def analyze_music(path, need):
-    """Load the music bed fitted to `need` seconds; estimate its beat and the start of its most
-    energetic stretch (used for the intro). Returns (stereo array, stretch factor, beat s, hot start s)."""
-    mu = decode(path, "loudnorm=I=-16:TP=-2:LRA=11")
-    have = len(mu) / SR
-    f = have / need
-    if 0.9 < f < 1.1 and abs(f - 1) > 0.003:
-        mu = decode(path, f"loudnorm=I=-16:TP=-2:LRA=11,atempo={f:.5f}")
-    else:
-        f = 1.0
-    mono = mu.mean(1)
+def _beat_grid(mono):
     hop = 512
     n = len(mono) // hop
     rms = np.sqrt((mono[:n * hop] ** 2).reshape(n, hop).mean(1) + 1e-10)
@@ -1093,6 +1355,41 @@ def analyze_music(path, need):
     lo, hi = int(env_sr * 60 / 150), int(env_sr * 60 / 90)
     ac = np.array([np.dot(onset[:-L], onset[L:]) for L in range(lo, hi + 1)])
     L = lo + int(np.argmax(ac))
+    return rms, onset, env_sr, L
+
+def analyze_music(path, need):
+    """Load the music bed and fit it to `need` seconds: repeat whole bars of an energetic stretch if it is
+    too short, then fine-tune with a pitch-preserving atempo. Returns (stereo, factor, beat s, hot start s)."""
+    mu = decode(path, "loudnorm=I=-16:TP=-2:LRA=11")
+    have = len(mu) / SR
+    rms, onset, env_sr, L = _beat_grid(mu.mean(1))
+    beat = L / env_sr
+    if need > have * 1.03:
+        bar = 4 * beat
+        deficit = need - have
+        nbars = int(math.ceil(deficit / bar))
+        seg = nbars * bar
+        # phase of the beat grid, and a downbeat near 40% of the track to splice at
+        phases = [onset[ph::L][:200].sum() for ph in range(L)]
+        ph = int(np.argmax(phases)) / env_sr
+        p = ph + round((0.40 * have - ph) / bar) * bar
+        a, b = int(p * SR), int((p + seg) * SR)
+        xf = int(0.03 * SR)
+        head, rep, tail = mu[:b], mu[a:b].copy(), mu[b - xf:]
+        rep[:xf] = rep[:xf] * np.linspace(0, 1, xf)[:, None] + head[-xf:] * np.linspace(1, 0, xf)[:, None]
+        mu = np.concatenate([head[:-xf], rep, tail[xf:]])
+        print(f"[audio] music extended by {nbars} bars ({seg:.1f}s) at {p:.1f}s", file=sys.stderr)
+    f = (len(mu) / SR) / need
+    if 0.9 < f < 1.1 and abs(f - 1) > 0.003:
+        tmpd = tempfile.mkdtemp(prefix="mu_")
+        raw = os.path.join(tmpd, "m.wav")
+        subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "f32le", "-ar", str(SR), "-ac", "2", "-i", "-", raw],
+                       input=mu.astype(np.float32).tobytes(), check=True)
+        mu = decode(raw, f"atempo={f:.5f}")
+        shutil.rmtree(tmpd, ignore_errors=True)
+    else:
+        f = 1.0
+    rms, onset, env_sr, L = _beat_grid(mu.mean(1))
     beat = L / env_sr
     win = int(8 * env_sr)
     csum = np.cumsum(np.concatenate([[0], rms]))
@@ -1101,7 +1398,7 @@ def analyze_music(path, need):
     start = a0 + int(np.argmax(loud[a0:a1]))
     phases = [onset[start + ph: start + ph + 16 * L: L].sum() for ph in range(L)]
     hot = (start + int(np.argmax(phases))) / env_sr
-    print(f"[audio] music {have:.1f}s fitted x{f:.3f}; beat {beat:.3f}s ({60/beat:.1f} BPM); intro from {hot:.1f}s",
+    print(f"[audio] music {have:.1f}s -> {len(mu)/SR:.1f}s (x{f:.3f}); beat {beat:.3f}s ({60/beat:.1f} BPM); intro from {hot:.1f}s",
           file=sys.stderr)
     return mu, f, beat, hot
 
@@ -1164,8 +1461,9 @@ def build_mix(plan, cfg, audio, tempo, music, wav_out):
     wh, im, tk = sfx_whoosh(), sfx_impact(), sfx_tick()
     for k, s in enumerate(plan.starts):
         if k > 0 or I:
-            add(mix, wh, s - WIPE - 0.25)
-            add(mix, im * 0.8, s + 0.1)
+            kind = cfg["scenes"][k].get("kind")
+            add(mix, wh * (0.8 if kind == "booth" else 1.0), s - WIPE - 0.25)
+            add(mix, im * (0.5 if kind == "booth" else 0.8), s + 0.1)
     if I:
         b = plan.beat
         add(mix, im * 0.9, 0.0)
@@ -1178,7 +1476,7 @@ def build_mix(plan, cfg, audio, tempo, music, wav_out):
     else:
         add(mix, im * 0.7, 0.2)
     for j in range(10):
-        add(mix, tk, plan.starts[0] + 0.25 + 1.1 * (j + 0.5) / 10)
+        add(mix, tk, plan.starts[0] + (0.1 if cfg["scenes"][0].get("kind") else 0.25) + (0.9 if cfg["scenes"][0].get("kind") else 1.1) * (j + 0.5) / 10)
     add(mix, im * 0.9, plan.starts[-1] + plan.ui_end_time)
     raw = os.path.splitext(wav_out)[0] + ".raw"
     mix.astype(np.float32).tofile(raw)

@@ -3,131 +3,49 @@
   "out": "out/hyan_carnival_2026_ms.mp4",
   "voice": {
     "provider": "ElevenLabs",
-    "voice_id": "vLZJLcQMJCqxjrHGEVDO",
-    "voice_name": "Connery - Deep & Immersive Documentary",
-    "model_id": "eleven_multilingual_v2",
+    "voice_id": "1uDSnuWUOvbosqTWAzfW",
+    "voice_name": "Shahrul - Energetic Social Media Creator",
+    "model_id": "eleven_v3",
     "voice_settings": {
-      "stability": 0.42,
-      "similarity_boost": 0.82,
-      "style": 0.4,
+      "stability": 0.5,
+      "similarity_boost": 0.8,
       "use_speaker_boost": true
     }
   },
-  "music": "audio/music/bed_ms.mp3",
-  "scenes": [
-    {
-      "id": 1,
-      "title": "Pembuka & Konteks Komuniti Yan",
-      "audio": "audio/ms/scene_1.mp3",
-      "narration": "Lapan belas November, dua ribu dua puluh enam. Sebuah hospital daerah di Yan, Kedah, membuka pintunya — bukan untuk merawat pesakit, tetapi untuk menjemput seluruh komuniti. Dua belas booth. Unit hospital, penguatkuasaan negeri, pertahanan awam, klinik, badan komuniti, malah institusi kewangan Islam. Satu idea menyatukan semuanya: pesakit paling selamat ialah pesakit yang berpengetahuan. Inilah Hospital Yan Community Carnival. Dan beginilah kawasan hospital bertukar menjadi sebuah bilik darjah.",
-      "cues": {
-        "district": "Sebuah hospital",
-        "twelve": "Dua belas booth",
-        "idea": "Satu idea",
-        "classroom": "Dan beginilah"
-      },
-      "chapter": null
-    },
-    {
-      "id": 2,
-      "title": "Booth Interaktif & Penglibatan Awam",
-      "audio": "audio/ms/scene_2.mp3",
-      "narration": "Mulakan dengan permainan — kerana di situlah ilmu tersembunyi. Di booth Patient Falls, pengunjung memutar Spinning Wheel dan menjawab soalan daripada buku kecil “Falling Love”. Mereka membaling gelang mutiara ke dalam kon untuk membuka tiga soalan — inilah Cone and Pearl. Kemudian, Mystery Box. Pilih satu kad, jawab dengan tepat. Anggota kesihatan pula berdepan lima soalan bonus klinikal — dan jawapan salah bermaksud mengunyah biskut hangus! Di sebelahnya, Unit Farmasi menukar isu antimicrobial resistance menjadi aktiviti memanah: bidik antibiotik, tepat ke sasaran bakteria. Dan maskot kapsul ubat sedia bergambar sambil mengajar prinsip lima B — pengguna betul, ubat betul, dos betul, cara betul, masa betul. Belajar, sambil bermain.",
-      "cues": {
-        "falls": "Di booth Patient Falls",
-        "toss": "Mereka membaling",
-        "mystery": "Kemudian, Mystery Box",
-        "staff": "Anggota kesihatan",
-        "wrong": "jawapan salah",
-        "archery": "Di sebelahnya",
-        "mascot": "Dan maskot",
-        "play": "Belajar, sambil"
-      },
-      "chapter": {
-        "num": "01",
-        "kicker": "BAB 01  ·  BOOTH INTERAKTIF",
-        "title": "PUBLIC ENGAGEMENT"
-      }
-    },
-    {
-      "id": 3,
-      "title": "Kecemerlangan Klinikal & Patient Safety",
-      "audio": "audio/ms/scene_3.mp3",
-      "narration": "Namun di sebalik keseronokan ini, ada kerja klinikal yang serius. Fall Prevention Programme oleh Jawatankuasa Patient Safety melatih pengunjung mengenal alat bantuan bergerak dan menilai faktor risiko jatuh — protokol wad, dibawa terus kepada orang ramai. Unit Kecemasan dan Trauma meletakkan CPR, teknik choking, dan mesin AED terus ke tangan pengunjung. Unit Pencegahan dan Kawalan Infeksi menekankan hand hygiene. Dan pasukan MedSafety membawa satu mesej yang tegas: kesan sampingan ubat — jangan abai, laporkan!",
-      "cues": {
-        "falls": "Fall Prevention Programme",
-        "aids": "alat bantuan",
-        "risk": "faktor risiko",
-        "er": "Unit Kecemasan",
-        "choking": "teknik choking",
-        "aed": "mesin AED",
-        "hands": "terus ke tangan",
-        "ipc": "Unit Pencegahan",
-        "hygiene": "hand hygiene",
-        "medsafe": "Dan pasukan MedSafety",
-        "side": "kesan sampingan",
-        "report": "jangan abai"
-      },
-      "chapter": {
-        "num": "02",
-        "kicker": "BAB 02  ·  KECEMERLANGAN KLINIKAL",
-        "title": "PATIENT SAFETY SHOWCASE"
-      }
-    },
-    {
-      "id": 4,
-      "title": "Sinergi Antara Jabatan & Inter-State",
-      "audio": "audio/ms/scene_4.mp3",
-      "narration": "Tiada satu unit pun mampu melakukannya sendirian. Cawangan Penguatkuasaan Farmasi JKN Kedah membawa kempen TOBaTS — Tolak Ubat Tidak Sah. Angkatan Pertahanan Awam berkongsi ilmu haiwan berbisa dan kesiapsiagaan bencana. Klinik Nurul menjalankan saringan BMI, tekanan darah, glukosa dan PEKA B empat puluh. Persatuan Diabetes mengajar penggunaan glucometer dan penjagaan kaki. Fisioterapi, YaPEIM dan Tabung Haji melengkapkan lingkaran ini. Dan jangkauannya merentas negeri: pasukan nursing research dari Clinical Research Centre Negeri Sembilan turut bersama dalam Patient Safety Day ini.",
-      "cues": {
-        "p_jkn": "Cawangan Penguatkuasaan",
-        "p_apm": "Angkatan Pertahanan",
-        "p_klinik": "Klinik Nurul",
-        "p_diab": "Persatuan Diabetes",
-        "p_physio": "Fisioterapi",
-        "p_yapeim": "YaPEIM",
-        "p_th": "Tabung Haji",
-        "route": "Dan jangkauannya"
-      },
-      "chapter": {
-        "num": "03",
-        "kicker": "BAB 03  ·  SINERGI MERENTAS SEMPADAN",
-        "title": "INTER-STATE COLLABORATION"
-      }
-    },
-    {
-      "id": 5,
-      "title": "Wawasan 2026 & Penutup Rasmi",
-      "audio": "audio/ms/scene_5.mp3",
-      "narration": "Tarikh ini bukan kebetulan. Karnival ini bermula pada hari pertama World AMR Awareness Week — One Health, One Action. Ia juga menandakan Patient Safety Day dua ribu dua puluh enam, diraikan di hadapan masyarakat. Di bawah kepimpinan Pengarah Hospital, Doktor Tengku Nurshahril, Hospital Yan berpegang pada satu idea yang mudah: penjagaan kesihatan yang keluar menemui komunitinya. Hospital Yan Community Carnival, dua ribu dua puluh enam. Bersama, untuk Yan yang lebih selamat.",
-      "cues": {
-        "open": "Karnival ini bermula",
-        "marks": "Ia juga menandakan",
-        "lead": "Di bawah kepimpinan",
-        "walks": "penjagaan kesihatan yang keluar",
-        "end": "Hospital Yan Community Carnival, dua",
-        "together": "Bersama, untuk"
-      },
-      "chapter": {
-        "num": "04",
-        "kicker": "BAB 04  ·  WAWASAN & PENUTUP",
-        "title": "VISION 2026"
-      }
-    }
-  ],
-  "tempo": 1.07,
+  "music": "audio/music/bed_ms_v4.mp3",
+  "intro": true,
+  "intro_gain": 0.9,
+  "tempo": 1.1,
   "leads": [
-    1.3,
-    1.7,
-    1.7,
-    1.7,
-    1.7
+    1.0,
+    0.9,
+    0.9,
+    0.9,
+    0.9,
+    0.9,
+    0.9,
+    0.9,
+    0.9,
+    0.9,
+    0.9,
+    0.9,
+    0.9,
+    1.1
   ],
   "tails": [
-    0.45,
-    0.45,
-    0.45,
-    0.45,
+    0.35,
+    0.35,
+    0.35,
+    0.35,
+    0.35,
+    0.35,
+    0.35,
+    0.35,
+    0.35,
+    0.35,
+    0.35,
+    0.35,
+    0.35,
     2.6
   ],
   "music_gains": [
@@ -137,8 +55,20 @@
   ],
   "caption_subs": [
     [
-      "Lapan belas November, dua ribu dua puluh enam",
-      "18 November 2026"
+      "dari booth satu sampai booth dua belas",
+      "dari booth 1 sampai booth 12"
+    ],
+    [
+      "Klinik Nurul dua puluh empat jam",
+      "Klinik Nurul 24 Jam"
+    ],
+    [
+      "Lapan belas November",
+      "18 November"
+    ],
+    [
+      "lapan belas November",
+      "18 November"
     ],
     [
       "dua ribu dua puluh enam",
@@ -149,171 +79,66 @@
       "12 booth"
     ],
     [
-      "lima soalan",
-      "5 soalan"
+      "Dan booth dua belas",
+      "Dan booth 12"
     ],
     [
-      "tiga soalan",
-      "3 soalan"
+      "Booth sebelas",
+      "Booth 11"
     ],
     [
-      "prinsip lima B",
-      "prinsip 5B"
+      "Booth sepuluh",
+      "Booth 10"
+    ],
+    [
+      "Booth sembilan",
+      "Booth 9"
+    ],
+    [
+      "Booth lapan",
+      "Booth 8"
+    ],
+    [
+      "Booth tujuh",
+      "Booth 7"
+    ],
+    [
+      "Booth enam",
+      "Booth 6"
+    ],
+    [
+      "Booth lima",
+      "Booth 5"
+    ],
+    [
+      "Booth empat",
+      "Booth 4"
+    ],
+    [
+      "Booth tiga",
+      "Booth 3"
+    ],
+    [
+      "Booth dua",
+      "Booth 2"
+    ],
+    [
+      "Booth satu",
+      "Booth 1"
     ],
     [
       "PEKA B empat puluh",
       "PEKA B40"
     ],
     [
+      "prinsip lima B",
+      "prinsip 5B"
+    ],
+    [
       "Doktor Tengku",
       "Dr. Tengku"
     ]
   ],
-  "ui": {
-    "s1_date_sub": "HOSPITAL YAN COMMUNITY CARNIVAL",
-    "s1_callout": "Pameran booth",
-    "s1_lower": "HOSPITAL YAN  ·  KEDAH",
-    "s1_lower_sub": "Bukan untuk merawat — tetapi menjemput komuniti.",
-    "s1_booths": "BOOTH",
-    "s1_legend": [
-      [
-        "Hospital Yan",
-        "5"
-      ],
-      [
-        "JKN Kedah",
-        "1"
-      ],
-      [
-        "Agensi Luar",
-        "1"
-      ],
-      [
-        "Komuniti",
-        "5"
-      ]
-    ],
-    "s1_title1": "PESAKIT PALING SELAMAT",
-    "s1_title2": "IALAH YANG BERPENGETAHUAN.",
-    "s1_title_hl": 2,
-    "s1_classroom": "Kawasan hospital menjadi bilik darjah",
-    "s2_wheel_sub": "+ buku kecil “Falling Love”",
-    "s2_wheel_callout": "Putar & jawab",
-    "s2_cone_n": [
-      [
-        "5",
-        "balingan"
-      ],
-      [
-        "3",
-        "soalan"
-      ]
-    ],
-    "s2_cone_callout": "Gelang mutiara",
-    "s2_staff": "Staf: 5 soalan bonus diagnosis risiko jatuh",
-    "s2_wrong1": "Jawapan salah?",
-    "s2_wrong2": "Kunyah biskut hangus!",
-    "s2_5b_items": [
-      [
-        "Pengguna betul",
-        "right user"
-      ],
-      [
-        "Ubat betul",
-        "right medicine"
-      ],
-      [
-        "Dos betul",
-        "right dose"
-      ],
-      [
-        "Cara betul",
-        "right way"
-      ],
-      [
-        "Masa betul",
-        "right time"
-      ]
-    ],
-    "s2_play": "Belajar, sambil bermain.",
-    "s3_head": "Di sebalik keseronokan: kerja klinikal yang serius.",
-    "s3_fall_sub": "Kenal alat bantuan  →  nilai faktor risiko  →  cegah jatuh",
-    "s3_call_aids": "Alat bantuan bergerak",
-    "s3_call_risk": "Faktor risiko jatuh",
-    "s3_hands": "…terus ke tangan pengunjung.",
-    "s3_med_sub": "Laporkan melalui doktor, ahli farmasi atau NPRA.",
-    "s4_head": "Tiada satu unit pun mampu melakukannya sendirian.",
-    "s4_partners": [
-      [
-        "image10.png",
-        "JKN Kedah · TOBaTS",
-        "p_jkn"
-      ],
-      [
-        "image8.png",
-        "APM / JPAM Gurun",
-        "p_apm"
-      ],
-      [
-        "image24.jpg",
-        "Klinik Nurul 24 Jam",
-        "p_klinik"
-      ],
-      [
-        "image19.png",
-        "Diabetes Malaysia Yan",
-        "p_diab"
-      ],
-      [
-        "image21.png",
-        "Wall & Bone Physio",
-        "p_physio"
-      ],
-      [
-        "image1.jpg",
-        "YaPEIM",
-        "p_yapeim"
-      ],
-      [
-        "image5.png",
-        "Tabung Haji Kedah",
-        "p_th"
-      ]
-    ],
-    "s5_head": "Tarikh ini bukan kebetulan.",
-    "s5_psd_sub": "…diraikan di hadapan masyarakat.",
-    "s5_role": "Pengarah Hospital, Hospital Yan",
-    "s5_quote": "Penjagaan kesihatan yang keluar menemui komunitinya.",
-    "s5_tag": "Bersama, untuk Yan yang lebih selamat.",
-    "intro_flash": [
-      [
-        "12 BOOTH",
-        "image15.jpg"
-      ],
-      [
-        "PERMAINAN",
-        "image12.jpg"
-      ],
-      [
-        "PATIENT SAFETY",
-        "image25.jpg"
-      ],
-      [
-        "KOLABORASI",
-        "image17.jpg"
-      ],
-      [
-        "KOMUNITI",
-        "image13.png"
-      ],
-      [
-        "JOM KE YAN!",
-        "image3.jpg"
-      ]
-    ],
-    "intro_sub": "PAMERAN  ·  18 NOVEMBER 2026  ·  YAN, KEDAH"
-  },
-  "intro": true,
   "caption_keep": [
     "Hospital Yan Community Carnival",
     "World AMR Awareness Week",
@@ -348,7 +173,615 @@
     "biskut hangus",
     "alat bantuan bergerak",
     "faktor risiko jatuh",
-    "Yan, Kedah"
+    "Yan, Kedah",
+    "Kenali Ubat Anda",
+    "Online Quiz AMS",
+    "Icon Yan Wall and Bone Physiotherapy Centre",
+    "neck and head release",
+    "Klinik Nurul",
+    "JPAM Gurun",
+    "Persatuan Diabetes Malaysia Daerah Yan",
+    "Lembaga Tabung Haji Kedah",
+    "TH Khairat",
+    "JK AMS dan MedSafe",
+    "Unit Farmasi",
+    "pesakit paling selamat"
   ],
-  "intro_gain": 0.9
+  "scenes": [
+    {
+      "kind": "hook",
+      "palette": 0,
+      "title": "Pembuka · Hospital Yan Community Carnival",
+      "narration": "Lapan belas November ini, Hospital Yan bukan lagi sekadar hospital — ia bertukar jadi karnival! Dua belas booth, satu misi: pesakit yang berpengetahuan ialah pesakit paling selamat. Jadi, jom kita jelajah satu per satu, dari booth satu sampai booth dua belas!",
+      "cues": {
+        "twelve": "Dua belas booth",
+        "mission": "pesakit yang berpengetahuan",
+        "tour": "jom kita jelajah",
+        "carnival": "bertukar jadi karnival"
+      },
+      "id": 1,
+      "audio": "audio/ms/s01.mp3"
+    },
+    {
+      "kind": "booth",
+      "booth": 1,
+      "category": "JKN",
+      "exhibitor": "Cawangan Penguatkuasaan Farmasi JKN Kedah",
+      "theme": "Kempen TOBaTS — Tolak Ubat Tidak Sah",
+      "narration": "Booth satu! Cawangan Penguatkuasaan Farmasi JKN Kedah, dengan kempen TOBaTS — Tolak Ubat Tidak Sah. Di sini, anda belajar cara mengenali ubat berdaftar, dan tengok sendiri contoh produk tidak berdaftar yang mengandungi bahan terlarang. Hati-hati, ya!",
+      "items": [
+        {
+          "text": "Cara mengenali ubat berdaftar",
+          "cue": "cara mengenali"
+        },
+        {
+          "text": "Contoh ubat & produk tidak berdaftar",
+          "cue": "contoh produk"
+        },
+        {
+          "text": "Produk mengandungi bahan terlarang",
+          "cue": "bahan terlarang"
+        }
+      ],
+      "media": [
+        {
+          "img": "image10.png",
+          "cue": null,
+          "style": "disc"
+        }
+      ],
+      "palette": 2,
+      "title": "Booth 01  ·  JKN",
+      "id": 2,
+      "audio": "audio/ms/s02.mp3",
+      "cues": {
+        "i0": "cara mengenali",
+        "i1": "contoh produk",
+        "i2": "bahan terlarang"
+      }
+    },
+    {
+      "kind": "booth",
+      "booth": 2,
+      "category": "Hospital Yan",
+      "exhibitor": "Unit Farmasi — Kenali Ubat Anda (QUMC)",
+      "theme": "Program KKM: guna ubat secara betul, selamat & berkesan",
+      "narration": "Booth dua! Unit Farmasi Hospital Yan bawa program Kenali Ubat Anda — dan maskot kapsul ubat dah sedia untuk bergambar dengan anda! Sambil tu, hafal prinsip lima B: pengguna betul, ubat betul, dos betul, cara betul, masa betul.",
+      "items": [
+        {
+          "text": "Bergambar bersama Maskot Kapsul Ubat",
+          "cue": "maskot kapsul"
+        },
+        {
+          "text": "Prinsip 5B: pengguna · ubat · dos · cara · masa betul",
+          "cue": "prinsip lima B"
+        }
+      ],
+      "media": [
+        {
+          "img": "image16.png",
+          "cue": null
+        },
+        {
+          "img": "image9.png",
+          "cue": "prinsip lima B",
+          "style": "disc"
+        }
+      ],
+      "palette": 1,
+      "title": "Booth 02  ·  Hospital Yan",
+      "id": 3,
+      "audio": "audio/ms/s03.mp3",
+      "cues": {
+        "i0": "maskot kapsul",
+        "i1": "prinsip lima B",
+        "m1": "prinsip lima B"
+      }
+    },
+    {
+      "kind": "booth",
+      "booth": 3,
+      "category": "Hospital Yan",
+      "exhibitor": "Unit Farmasi — JK AMS & JK MedSafe",
+      "theme": "World AMR Awareness Week 2026  ·  #MedSafetyWeek Malaysia 2026",
+      "narration": "Booth tiga! Unit Farmasi, JK AMS dan MedSafe, sempena World AMR Awareness Week. Dah jawab Online Quiz AMS seminggu sebelum karnival? Datang tuntut hadiah anda! Lepas tu, cuba aktiviti memanah — tembak antibiotik tepat kena bakteria. Dan ingat: kesan sampingan ubat, jangan abai, laporkan!",
+      "items": [
+        {
+          "text": "Online Quiz AMS — tuntut hadiah di booth",
+          "cue": "Online Quiz"
+        },
+        {
+          "text": "AMS Archery: antibiotic → bacteria",
+          "cue": "aktiviti memanah"
+        },
+        {
+          "text": "#MedSafetyWeek: kesan sampingan ubat — laporkan!",
+          "cue": "kesan sampingan"
+        }
+      ],
+      "media": [
+        {
+          "img": "image28.png",
+          "cue": null
+        },
+        {
+          "img": "image11.png",
+          "cue": "kesan sampingan"
+        }
+      ],
+      "palette": 3,
+      "title": "Booth 03  ·  Hospital Yan",
+      "id": 4,
+      "audio": "audio/ms/s04.mp3",
+      "cues": {
+        "i0": "Online Quiz",
+        "i1": "aktiviti memanah",
+        "i2": "kesan sampingan",
+        "m1": "kesan sampingan"
+      }
+    },
+    {
+      "kind": "booth",
+      "booth": 4,
+      "category": "Hospital Yan",
+      "exhibitor": "Unit Pencegahan dan Kawalan Infeksi",
+      "theme": "Hand Hygiene  ·  Clean hands. Safe lives.",
+      "narration": "Booth empat! Unit Pencegahan dan Kawalan Infeksi, dengan aktiviti hand hygiene. Nampak simple, tapi inilah benteng pertama melawan jangkitan. Tangan bersih, nyawa selamat!",
+      "items": [
+        {
+          "text": "Aktiviti Hand Hygiene",
+          "cue": "aktiviti hand hygiene"
+        }
+      ],
+      "media": [
+        {
+          "img": "image4.jpg",
+          "cue": null
+        }
+      ],
+      "palette": 0,
+      "title": "Booth 04  ·  Hospital Yan",
+      "id": 5,
+      "audio": "audio/ms/s05.mp3",
+      "cues": {
+        "i0": "aktiviti hand hygiene",
+        "tag": "Tangan bersih"
+      },
+      "tagline": {
+        "text": "Tangan bersih, nyawa selamat!",
+        "cue": "Tangan bersih"
+      }
+    },
+    {
+      "kind": "booth",
+      "booth": 5,
+      "category": "Hospital Yan",
+      "exhibitor": "JK Patient Safety — Patient Falls",
+      "theme": "Fall Prevention & Intervention Programme  ·  KJ Nazatul Azni binti Nek",
+      "narration": "Booth lima — bintang Patient Safety Day! Jawatankuasa Patient Safety bawa Fall Prevention Programme, dengan tiga permainan. Putar Spinning Wheel dan jawab soalan buku Falling Love. Baling gelang mutiara dalam Cone and Pearl. Dan cabaran Mystery Box — staf yang salah jawab, kena kunyah biskut hangus! Ada juga pameran patient fall, dan setiap peserta dapat hadiah.",
+      "items": [
+        {
+          "text": "Spinning Wheel + buku “Falling Love”",
+          "cue": "Putar Spinning"
+        },
+        {
+          "text": "Cone & Pearl: 5 balingan, 3 soalan",
+          "cue": "Baling gelang"
+        },
+        {
+          "text": "Mystery Box: 5 soalan bonus untuk staf",
+          "cue": "cabaran Mystery"
+        },
+        {
+          "text": "Pameran & pembentangan Patient Fall",
+          "cue": "pameran patient fall"
+        },
+        {
+          "text": "Hadiah untuk setiap peserta",
+          "cue": "setiap peserta"
+        }
+      ],
+      "media": [
+        {
+          "img": "image12.jpg",
+          "cue": null
+        },
+        {
+          "img": "image2.jpg",
+          "cue": "Baling gelang"
+        },
+        {
+          "img": "image14.png",
+          "cue": "cabaran Mystery"
+        },
+        {
+          "img": "image25.jpg",
+          "cue": "pameran patient fall"
+        },
+        {
+          "img": "image20.jpg",
+          "cue": "setiap peserta"
+        }
+      ],
+      "palette": 1,
+      "title": "Booth 05  ·  Hospital Yan",
+      "id": 6,
+      "audio": "audio/ms/s06.mp3",
+      "cues": {
+        "i0": "Putar Spinning",
+        "i1": "Baling gelang",
+        "i2": "cabaran Mystery",
+        "i3": "pameran patient fall",
+        "i4": "setiap peserta",
+        "m1": "Baling gelang",
+        "m2": "cabaran Mystery",
+        "m3": "pameran patient fall",
+        "m4": "setiap peserta"
+      }
+    },
+    {
+      "kind": "booth",
+      "booth": 6,
+      "category": "Komuniti",
+      "exhibitor": "Icon Yan Wall and Bone Physiotherapy Centre",
+      "theme": "Towards a better you",
+      "narration": "Booth enam! Icon Yan Wall and Bone Physiotherapy Centre. Leher tegang? Kepala rasa berat? Datang buat pemeriksaan, dan rasai sendiri teknik neck and head release.",
+      "items": [
+        {
+          "text": "Pemeriksaan",
+          "cue": "pemeriksaan"
+        },
+        {
+          "text": "Neck & head release",
+          "cue": "neck and head"
+        }
+      ],
+      "media": [
+        {
+          "img": "image21.png",
+          "cue": null,
+          "style": "disc"
+        }
+      ],
+      "palette": 4,
+      "title": "Booth 06  ·  Komuniti",
+      "id": 7,
+      "audio": "audio/ms/s07.mp3",
+      "cues": {
+        "i0": "pemeriksaan",
+        "i1": "neck and head"
+      }
+    },
+    {
+      "kind": "booth",
+      "booth": 7,
+      "category": "Hospital Yan",
+      "exhibitor": "Unit Kecemasan & Trauma Hospital Yan",
+      "theme": "Hands-on: ilmu yang menyelamatkan nyawa",
+      "narration": "Booth tujuh! Unit Kecemasan dan Trauma Hospital Yan. Jangan setakat tengok — buat sendiri! Teknik CPR, teknik bantuan choking, dan cara guna mesin AED. Ilmu yang boleh selamatkan nyawa!",
+      "items": [
+        {
+          "text": "Hands-on: Teknik CPR",
+          "cue": "Teknik CPR"
+        },
+        {
+          "text": "Teknik Choking",
+          "cue": "bantuan choking"
+        },
+        {
+          "text": "Penggunaan mesin AED",
+          "cue": "mesin AED"
+        }
+      ],
+      "media": [
+        {
+          "img": "@ecg",
+          "cue": null
+        }
+      ],
+      "palette": 5,
+      "title": "Booth 07  ·  Hospital Yan",
+      "id": 8,
+      "audio": "audio/ms/s08.mp3",
+      "cues": {
+        "i0": "Teknik CPR",
+        "i1": "bantuan choking",
+        "i2": "mesin AED",
+        "tag": "Ilmu yang"
+      },
+      "tagline": {
+        "text": "Ilmu yang boleh selamatkan nyawa!",
+        "cue": "Ilmu yang"
+      }
+    },
+    {
+      "kind": "booth",
+      "booth": 8,
+      "category": "Komuniti",
+      "exhibitor": "Klinik Nurul 24 Jam Gurun",
+      "theme": "Saringan kesihatan",
+      "narration": "Booth lapan! Klinik Nurul dua puluh empat jam, Gurun. Jom buat saringan kesihatan: BMI, tekanan darah, gula dalam darah, dan PEKA B empat puluh.",
+      "items": [
+        {
+          "text": "BMI",
+          "cue": "BMI"
+        },
+        {
+          "text": "Tekanan darah (BP)",
+          "cue": "tekanan darah"
+        },
+        {
+          "text": "Gula dalam darah (BG)",
+          "cue": "gula dalam"
+        },
+        {
+          "text": "PEKA B40",
+          "cue": "PEKA B"
+        }
+      ],
+      "media": [
+        {
+          "img": "image24.jpg",
+          "cue": null,
+          "style": "disc"
+        }
+      ],
+      "palette": 0,
+      "title": "Booth 08  ·  Komuniti",
+      "id": 9,
+      "audio": "audio/ms/s09.mp3",
+      "cues": {
+        "i0": "BMI",
+        "i1": "tekanan darah",
+        "i2": "gula dalam",
+        "i3": "PEKA B"
+      }
+    },
+    {
+      "kind": "booth",
+      "booth": 9,
+      "category": "Agensi Luar",
+      "exhibitor": "Angkatan Pertahanan Awam Malaysia (APM) / JPAM Gurun",
+      "theme": "Sedia · Pantas · Mesra",
+      "narration": "Booth sembilan! Angkatan Pertahanan Awam Malaysia, JPAM Gurun. Kenali haiwan berbisa, dapatkan maklumat bencana, belajar ikatan dan simpulan tali, tengok peralatan operasi mereka — dan yang berminat, boleh terus daftar jadi anggota baru!",
+      "items": [
+        {
+          "text": "Pengisian haiwan berbisa",
+          "cue": "haiwan berbisa"
+        },
+        {
+          "text": "Maklumat bencana",
+          "cue": "maklumat bencana"
+        },
+        {
+          "text": "Ikatan & simpulan tali",
+          "cue": "ikatan dan"
+        },
+        {
+          "text": "Pameran peralatan operasi APM",
+          "cue": "peralatan operasi"
+        },
+        {
+          "text": "Pengambilan anggota baru",
+          "cue": "anggota baru"
+        }
+      ],
+      "media": [
+        {
+          "img": "image8.png",
+          "cue": null,
+          "style": "disc"
+        }
+      ],
+      "palette": 5,
+      "title": "Booth 09  ·  Agensi Luar",
+      "id": 10,
+      "audio": "audio/ms/s10.mp3",
+      "cues": {
+        "i0": "haiwan berbisa",
+        "i1": "maklumat bencana",
+        "i2": "ikatan dan",
+        "i3": "peralatan operasi",
+        "i4": "anggota baru"
+      }
+    },
+    {
+      "kind": "booth",
+      "booth": 10,
+      "category": "Komuniti",
+      "exhibitor": "Persatuan Diabetes Malaysia Daerah Yan",
+      "theme": "Educate · Support · Care",
+      "narration": "Booth sepuluh! Persatuan Diabetes Malaysia Daerah Yan. Belajar guna glucometer dengan betul, dapatkan tips penjagaan kaki — dan tengok berapa banyak gula dalam minuman popular kegemaran anda. Mesti terkejut!",
+      "items": [
+        {
+          "text": "Cara guna glucometer",
+          "cue": "guna glucometer"
+        },
+        {
+          "text": "Tips penjagaan kaki",
+          "cue": "penjagaan kaki"
+        },
+        {
+          "text": "Kandungan gula minuman popular",
+          "cue": "gula dalam minuman"
+        }
+      ],
+      "media": [
+        {
+          "img": "image19.png",
+          "cue": null,
+          "style": "disc"
+        }
+      ],
+      "palette": 2,
+      "title": "Booth 10  ·  Komuniti",
+      "id": 11,
+      "audio": "audio/ms/s11.mp3",
+      "cues": {
+        "i0": "guna glucometer",
+        "i1": "penjagaan kaki",
+        "i2": "gula dalam minuman"
+      }
+    },
+    {
+      "kind": "booth",
+      "booth": 11,
+      "category": "Komuniti",
+      "exhibitor": "Yayasan Pembangunan Ekonomi Islam Malaysia (YaPEIM)",
+      "theme": "Khidmat emas & kebajikan",
+      "narration": "Booth sebelas! YaPEIM. Ada cuci emas percuma, khidmat nasihat emas, infak bersama YaPEIM, dan info skim-skim YaPEIM.",
+      "items": [
+        {
+          "text": "Cuci emas percuma",
+          "cue": "cuci emas"
+        },
+        {
+          "text": "Khidmat nasihat emas",
+          "cue": "khidmat nasihat"
+        },
+        {
+          "text": "Infak bersama YaPEIM",
+          "cue": "infak"
+        },
+        {
+          "text": "Skim-skim YaPEIM",
+          "cue": "skim-skim"
+        }
+      ],
+      "media": [
+        {
+          "img": "image1.jpg",
+          "cue": null,
+          "style": "disc"
+        }
+      ],
+      "palette": 3,
+      "title": "Booth 11  ·  Komuniti",
+      "id": 12,
+      "audio": "audio/ms/s12.mp3",
+      "cues": {
+        "i0": "cuci emas",
+        "i1": "khidmat nasihat",
+        "i2": "infak",
+        "i3": "skim-skim"
+      }
+    },
+    {
+      "kind": "booth",
+      "booth": 12,
+      "category": "Komuniti",
+      "exhibitor": "Lembaga Tabung Haji Negeri Kedah",
+      "theme": "Kempen Barakah Sihat bersama JKN Kedah",
+      "narration": "Dan booth dua belas! Lembaga Tabung Haji Kedah. Buka akaun untuk kanak-kanak atau dewasa, buat simpanan, kemaskini maklumat, aktifkan THiJARI, daftar TH Khairat dan penama, dan dapatkan konsultasi. Ada hadiah menarik menanti!",
+      "items": [
+        {
+          "text": "Buka akaun kanak-kanak / dewasa",
+          "cue": "Buka akaun"
+        },
+        {
+          "text": "Simpanan & kemaskini maklumat",
+          "cue": "buat simpanan"
+        },
+        {
+          "text": "Pengaktifan THiJARI",
+          "cue": "aktifkan THiJARI"
+        },
+        {
+          "text": "TH Khairat, penama & direct debit",
+          "cue": "TH Khairat"
+        },
+        {
+          "text": "Konsultasi",
+          "cue": "konsultasi"
+        },
+        {
+          "text": "Hadiah menarik menanti!",
+          "cue": "hadiah menarik"
+        }
+      ],
+      "media": [
+        {
+          "img": "image5.png",
+          "cue": null
+        },
+        {
+          "img": "image26.png",
+          "cue": "buat simpanan"
+        },
+        {
+          "img": "image13.png",
+          "cue": "konsultasi"
+        }
+      ],
+      "palette": 4,
+      "title": "Booth 12  ·  Komuniti",
+      "id": 13,
+      "audio": "audio/ms/s13.mp3",
+      "cues": {
+        "i0": "Buka akaun",
+        "i1": "buat simpanan",
+        "i2": "aktifkan THiJARI",
+        "i3": "TH Khairat",
+        "i4": "konsultasi",
+        "i5": "hadiah menarik",
+        "m1": "buat simpanan",
+        "m2": "konsultasi"
+      }
+    },
+    {
+      "kind": "closing",
+      "palette": 4,
+      "title": "Wawasan 2026 & Penutup",
+      "narration": "Dan semua ini bertepatan dengan World AMR Awareness Week, serta sambutan Patient Safety Day dua ribu dua puluh enam. Di bawah kepimpinan Pengarah Hospital, Doktor Tengku Nurshahril, Hospital Yan membawa penjagaan kesihatan terus ke tengah komuniti. Jadi, jumpa anda di Hospital Yan Community Carnival, lapan belas November ini! Bersama, untuk Yan yang lebih selamat.",
+      "cues": {
+        "open": "World AMR",
+        "marks": "Patient Safety Day",
+        "lead": "Di bawah kepimpinan",
+        "walks": "membawa penjagaan",
+        "end": "jumpa anda",
+        "together": "Bersama, untuk"
+      },
+      "id": 14,
+      "audio": "audio/ms/s14.mp3"
+    }
+  ],
+  "ui": {
+    "intro_flash": [
+      [
+        "12 BOOTH",
+        "image15.jpg"
+      ],
+      [
+        "PERMAINAN",
+        "image12.jpg"
+      ],
+      [
+        "PATIENT SAFETY",
+        "image25.jpg"
+      ],
+      [
+        "KOLABORASI",
+        "image17.jpg"
+      ],
+      [
+        "KOMUNITI",
+        "image13.png"
+      ],
+      [
+        "JOM KE YAN!",
+        "image3.jpg"
+      ]
+    ],
+    "intro_sub": "PAMERAN  ·  18 NOVEMBER 2026  ·  YAN, KEDAH",
+    "s5_role": "Pengarah Hospital, Hospital Yan",
+    "s5_quote": "Penjagaan kesihatan, terus ke tengah komuniti.",
+    "s5_tag": "Bersama, untuk Yan yang lebih selamat.",
+    "list_head": "AKTIVITI & PAMERAN",
+    "cat_label": {
+      "Hospital Yan": "HOSPITAL YAN",
+      "JKN": "JKN KEDAH",
+      "Komuniti": "KOMUNITI",
+      "Agensi Luar": "AGENSI LUAR"
+    }
+  }
 }
